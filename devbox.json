@@ -1,0 +1,36 @@
+{
+  "$schema":  "https://raw.githubusercontent.com/jetify-com/devbox/0.17.1/.schema/devbox.schema.json",
+  "packages": ["claude-code@latest", "python314@latest", "uv@latest"],
+  "env": {
+    "GITHUB_REPOSITORY": "thomasbuchinger/buc-mcp"
+  },
+  "shell": {
+
+    "scripts": {
+      "test": [
+        "uv sync --frozen && uv run pytest"
+      ],
+      "version": [
+        "uv run semantic-release version --print 2>/dev/null || echo 'no release needed'"
+      ],
+      "release": [
+        "uv run semantic-release version"
+      ],
+      "build": [
+        "VERSION=$(uv run semantic-release version --print 2>/dev/null || true)",
+        "if [ -z \"$VERSION\" ]; then echo 'No release needed — skipping build'; exit 0; fi",
+        "echo \"Building container image version: $VERSION\"",
+        "docker build -t ghcr.io/$GITHUB_REPOSITORY:$VERSION .",
+        "echo \"Tagged: ghcr.io/$GITHUB_REPOSITORY:$VERSION\""
+      ],
+      "publish": [
+        "VERSION=$(uv run semantic-release version --print 2>/dev/null || true)",
+        "if [ -z \"$VERSION\" ]; then echo 'No release needed — skipping publish'; exit 0; fi",
+        "uv run semantic-release version",
+        "docker build -t ghcr.io/$GITHUB_REPOSITORY:$VERSION .",
+        "docker push ghcr.io/$GITHUB_REPOSITORY:$VERSION",
+        "echo \"Published: ghcr.io/$GITHUB_REPOSITORY:$VERSION\""
+      ]
+    }
+  }
+}

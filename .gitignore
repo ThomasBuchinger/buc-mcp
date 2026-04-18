@@ -1,0 +1,6 @@
+.claude
+.devbox
+.venv
+
+devbox.lock
+uv.lock
