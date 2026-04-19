@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: buc-mcp
-          image: buc-mcp:latest
+          image: ghcr.io/thomasbuchinger/buc-mcp:v0.1.0
           ports:
             - containerPort: 8000
           livenessProbe:

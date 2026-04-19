@@ -33,7 +33,8 @@ testpaths = ["tests"]
 
 [tool.semantic_release]
 version_toml = ["pyproject.toml:project.version"]
+version_variables = ["k8s/app.yaml:buc-mcp:tag_format"]
 branch = "main"
 commit_message = "chore(release): v{version}"
 tag_format = "v{version}"
-major_on_zero = false
+allow_zero_version = true
