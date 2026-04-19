@@ -24,12 +24,12 @@
         "echo \"Tagged: ghcr.io/$GITHUB_REPOSITORY:$VERSION\""
       ],
       "publish": [
-        "VERSION=$(uv run semantic-release version --print 2>/dev/null || true)",
-        "if [ -z \"$VERSION\" ]; then echo 'No release needed — skipping publish'; exit 0; fi",
-        "uv run semantic-release version",
-        "docker build -t ghcr.io/$GITHUB_REPOSITORY:$VERSION .",
-        "docker push ghcr.io/$GITHUB_REPOSITORY:$VERSION",
-        "echo \"Published: ghcr.io/$GITHUB_REPOSITORY:$VERSION\""
+        "uv run semantic-release changelog",
+        "uv run semantic-release version || { echo 'No release needed — skipping publish'; exit 0; }",
+        "VERSION=$(grep '^version' pyproject.toml | head -1 | sed 's/.*\"\\(.*\\)\"/\\1/')",
+        "docker build -t ghcr.io/$GITHUB_REPOSITORY:v$VERSION .",
+        "docker push ghcr.io/$GITHUB_REPOSITORY:v$VERSION",
+        "echo \"Published: ghcr.io/$GITHUB_REPOSITORY:v$VERSION\""
       ]
     }
   }
