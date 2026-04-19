@@ -7,5 +7,4 @@ def code_review(language: str = "python") -> str:
     return (
         f"Review the following {language} code. "
         "Check for bugs, security issues, performance problems, and style. "
-        "Suggest specific improvements with code examples."
     )
