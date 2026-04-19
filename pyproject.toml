@@ -33,7 +33,7 @@ testpaths = ["tests"]
 
 [tool.semantic_release]
 version_toml = ["pyproject.toml:project.version"]
-version_variables = ["k8s/app.yaml:buc-mcp:tag_format"]
+build_command = "sed -i 's|image: ghcr.io/thomasbuchinger/buc-mcp:v.*|image: ghcr.io/thomasbuchinger/buc-mcp:v{version}|' k8s/app.yaml"
 branch = "main"
 commit_message = "chore(release): v{version}"
 tag_format = "v{version}"
