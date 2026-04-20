@@ -22,7 +22,7 @@ mcp.add_provider(SkillsDirectoryProvider(
 register_health_routes(mcp)
 register_metrics_route(mcp)
 
-app = mcp.http_app(stateless_http=True)
+app = mcp.http_app(stateless_http=False)
 
 
 def main():
