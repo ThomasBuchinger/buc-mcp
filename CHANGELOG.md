@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.2.1 (2026-04-20)
+
+### Bug Fixes
+
+- Run container as non-root
+  ([`2d626e9`](https://github.com/thomasbuchinger/buc-mcp/commit/2d626e9a9c7cff38c0645397a51ad70f9c83f419))
+
+
 ## v0.2.0 (2026-04-20)
 
 ### Features
