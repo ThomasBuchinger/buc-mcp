@@ -11,6 +11,7 @@ FROM python:3.14-slim
 
 WORKDIR /app
 
+USER nobody
 COPY --from=builder /app/.venv .venv
 COPY src/ src/
 COPY prompts/ prompts/
