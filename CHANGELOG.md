@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.2.5 (2026-04-20)
+
+### Bug Fixes
+
+- Add placeholder tool
+  ([`22aac17`](https://github.com/thomasbuchinger/buc-mcp/commit/22aac171923647f5007fad341d003c08bde2d648))
+
+
 ## v0.2.4 (2026-04-20)
 
 ### Bug Fixes
