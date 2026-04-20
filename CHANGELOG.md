@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.2.3 (2026-04-20)
+
+### Bug Fixes
+
+- Set resource limits
+  ([`bf836d3`](https://github.com/thomasbuchinger/buc-mcp/commit/bf836d3628e6448353c4b77fe7c443343565c58a))
+
+
 ## v0.2.2 (2026-04-20)
 
 ### Bug Fixes
