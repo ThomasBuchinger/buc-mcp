@@ -22,6 +22,11 @@ mcp.add_provider(SkillsDirectoryProvider(
 register_health_routes(mcp)
 register_metrics_route(mcp)
 
+
+@mcp.tool(description="This tool does nothing and should not be used. It exists only as a placeholder.")
+def noop() -> str:
+    return "This tool does nothing."
+
 app = mcp.http_app(stateless_http=False)
 
 
