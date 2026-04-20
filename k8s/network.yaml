@@ -1,0 +1,81 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: buc-mcp
+  labels:
+    app.kubernetes.io/name: buc-mcp
+    app.kubernetes.io/version: 0.2.0
+spec:
+  rules:
+  - host: buc-mcp.cluster.example.com # TODO: set actual hostname
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: buc-mcp
+            port:
+              name: http
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: buc-mcp-default-netpol
+  labels:
+    app.kubernetes.io/name: buc-mcp
+    app.kubernetes.io/version: 0.2.0
+spec:
+  podSelector: {}
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: traefik
+  - from:
+    - podSelector: {}
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - port: 53
+      protocol: UDP
+    - port: 53
+      protocol: TCP
+  - to:
+    - podSelector: {}
+---
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: buc-mcp-netpol
+  labels:
+    app.kubernetes.io/name: buc-mcp
+    app.kubernetes.io/version: 0.2.0
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: buc-mcp
+  policyTypes:
+  - Ingress
+  - Egress
+  ingress:
+  - from:
+    - namespaceSelector: {}
+    ports:
+    - port: 8000
+  egress:
+  - to:
+    - namespaceSelector:
+        matchLabels:
+          kubernetes.io/metadata.name: kube-system
+    ports:
+    - port: 53
+      protocol: UDP
+    - port: 53
+      protocol: TCP

@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: <app>
+  # namespace: ""           # Only include Namespace if the user spcified a namespace
+  labels:
+    app.kubernetes.io/name: <app>
+    app.kubernetes.io/version: 1.0.0
+spec:
+  accessModes:
+  - ReadWriteOnce
+  storageClassName: "local-path"
+  resources:
+    requests:
+      storage: "1Gi"
+  selector: {}
+  dataSourceRef: {}
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: <app>
+  # namespace: ""           # Only include Namespace if the user spcified a namespace
+  labels:
+    app.kubernetes.io/name: <app>
+    app.kubernetes.io/version: 1.0.0
+spec:
+  storageClassName: "manual"
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: "1Gi"
+  # persistentVolumeReclaimPolicy: Delete  # enum: Delete, Retain
+  # mountOptions:
+  # - ""
+  # claimRef: {}
+  # nodeAffinity: {}
+
+  # hostPath: {}
+  # nfs: {}
+  # iscsi: {}
+

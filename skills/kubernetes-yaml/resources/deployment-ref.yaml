@@ -1,0 +1,146 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: <app>
+  # namespace: ""           # Only include Namespace if the user specified a namespace
+  labels:                   # ALWAYS use the same labels in metadata.labels and template.metadata.labels
+    app.kubernetes.io/name: <app>
+    app.kubernetes.io/version: 1.0.0
+spec:
+  replicas: 1               # Default to 1 replica
+  selector:                 # ONLY use `app.kubernetes.io/name: <app>` in spec.selector
+    matchLabels:
+      app.kubernetes.io/name: <app>
+  strategy:
+    type: RollingUpdate     # enum: Recreate, RollingUpdate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: <app>
+        app.kubernetes.io/version: 1.0.0
+    spec:
+      containers:
+      - name: "<app>"
+        image: ""
+        imagePullPolicy: IfNotPresent
+        # command: []                   # Don't override command unless necessary
+        # args: []
+        # workingDir: ""
+        ports:
+        - name: "http"                  # always name ports
+          containerPort: 80
+        env:
+        - name: LOG_LEVEL               # Prefer hardcoding Env Variables if there are <5
+          value: info
+        - name: API_KEY                 # ALWAYS reference secret values explicitly
+          valueFrom:
+            secretKeyRef:
+              name: <secret>
+              key: <key>
+        envFrom:
+        - configMapRef:                 # Prefer a ConfigMap for env Variables if there are >5
+            name: ""
+          # NEVER use secretRef in envFrom
+        resources:
+          requests:
+            cpu: "10m"
+            memory: "128Mi"
+          limits:
+            # NEVER set CPU limits
+            memory: "128Mi"         # Always set requests.memory = limits.memory
+        livenessProbe:              # Always have livenessProbe and readinessProbe
+          httpGet:
+            path: "/healthz"
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: "/ready"
+            port: http
+          initialDelaySeconds: 10
+          periodSeconds: 10
+        lifecycle: {}           # Avoid using LifeCycle Hooks unless there is a good reason
+        securityContext:        # ALWAYS configure the SecurityContext
+          # runAsUser: 1000     # Only set specific UID when required by the container
+          # runAsGroup: 1000    # only set specific GID when required by the container
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          privileged: false
+          capabilities:
+            add: []
+            drop:
+            - "ALL"
+          seccompProfile:
+            type: RuntimeDefault  # -required- enum: Localhost, RuntimeDefault, Unconfined
+          appArmorProfile:
+            type: RuntimeDefault  # -required- enum: Localhost, RuntimeDefault, Unconfined
+        # --- Volume Mounts ---
+        volumeMounts:
+        - name: "tmp"            # -required-
+          mountPath: "/tmp"       # -required-
+          readOnly: false     # Set Mountpaths to ReadOnly if you can
+        # --- Misc Container ---
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File  # enum: FallbackToLogsOnError, File
+        
+          
+      initContainers: []  # See `containers`
+      ephemeralContainers: []  # See `containers`
+
+      serviceAccountName: <app>   # Always create a new ServiceAccount for every Deployment
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        fsGroupChangePolicy: OnRootMismatch  # enum: Always, OnRootMismatch
+        seccompProfile:
+          type: RuntimeDefault
+        appArmorProfile:
+          type: RuntimeDefault
+        # runAsUser: 1000         # Only use specific UIDs and GIDs if required by the container image
+        # runAsGroup: 1000
+        # fsGroup: 1000
+        # supplementalGroups:
+        #   - 1000
+      topologySpreadConstraints:
+        - maxSkew: 1
+          topologyKey: kubernetes.io/hostname
+          whenUnsatisfiable: DoNotSchedule
+
+      # ===== MISC =====
+      restartPolicy: Always       # enum: Always, Never, OnFailure
+      terminationGracePeriodSeconds: 30
+      enableServiceLinks: false
+      # affinity:                 # Only use Affinity Configuration when necessary
+      #   nodeAffinity: {}
+      #   podAffinity: {}
+      #   podAntiAffinity: {}
+      # tolerations: {}
+      # nodeSelector: {}
+
+      volumes:
+        - name: "tmp"
+          emptyDir: {}
+          # image:                $ you can use container images as volumes. This is a new feature
+          #   reference: ""
+          #   pullPolicy: IfNotPresent
+  revisionHistoryLimit: 10
+  minReadySeconds: 0
+  paused: false
+  progressDeadlineSeconds: 600
+
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: <app>
+  # namespace: ""           # Only include Namespace if the user spcified a namespace
+  labels:
+    app.kubernetes.io/name: <app>
+    app.kubernetes.io/version: 1.0.0
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: <app>

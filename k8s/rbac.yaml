@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: buc-mcp
+  labels:
+    app.kubernetes.io/name: buc-mcp
+    app.kubernetes.io/version: 0.2.0
+automountServiceAccountToken: false

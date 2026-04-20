@@ -1,0 +1,29 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: <app>
+  # namespace: ""           # Only include Namespace if the user spcified a namespace
+  labels:
+    app.kubernetes.io/name: <app>
+    app.kubernetes.io/version: 1.0.0
+spec:
+  # ingressClassName: ""   # Usually there is a default IngressClass
+
+  # Never use a default Backend
+  
+  # tls:                  # Check if you have enough information to 
+  # - hosts:
+  #   - <app>.cluster.example.com
+  #   secretName: <secret-name>
+  rules:
+  - host: <app>.cluster.example.com
+    http:
+      paths:
+      - pathType: Prefix
+        path: "/"
+        backend:
+          service:
+            name: "<service-name>"
+            port:
+              name: "http"
+        

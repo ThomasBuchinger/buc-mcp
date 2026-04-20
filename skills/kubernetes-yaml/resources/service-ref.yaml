@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: <app>
+  # namespace: ""           # Only include Namespace if the user spcified a namespace
+  labels:
+    app.kubernetes.io/name: <app>
+    app.kubernetes.io/version: 1.0.0
+spec:
+  type: ClusterIP           # enum: ClusterIP, ExternalName, LoadBalancer, NodePort
+  selector:
+    app.kubernetes.io/name: <app>
+  ports:
+    - name: "http"          # Always name Ports. Use the same Name as on the Pod
+      port: 80
+      targetPort: 80

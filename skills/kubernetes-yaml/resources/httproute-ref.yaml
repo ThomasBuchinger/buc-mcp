@@ -1,0 +1,48 @@
+apiVersion: gateway.networking.k8s.io/v1
+kind: HTTPRoute
+metadata:
+  name: <app>
+  # namespace: ""           # Only include Namespace if the user spcified a namespace
+  labels:
+    app.kubernetes.io/name: <app>
+    app.kubernetes.io/version: 1.0.0
+spec:
+  parentRefs:
+  - name: "<name>"      # Use the parentRef to attach the HTTPRoute to the gateway
+    namespace: ""
+    # sectionName: ""
+
+  hostnames:            # Assume most Gateways to use a unique subdomain like <app>.cluster.example.com 
+  - "<app>.cluster.example.com"
+  rules:
+  - matches:
+    - path:                 # Use a Rule With PathPrefix and path: "/" by default
+        type: PathPrefix
+        value: "/"
+    # - method: GET         # Use mote explicit Rules if you have more information
+    #   path:
+    #     type: RegularExpression
+    #     value: "/"
+    #   headers: {}
+    #   queryParams: {}
+
+    # filters:              # Don't include a filter section, unless you have identified which Filters you need. URLRewrite-filter is the most used filter
+    #   - type: "URLRewrite"          # enum: RequestHeaderModifier, ResponseHeaderModifier, RequestMirror, RequestRedirect, URLRewrite, ExtensionRef
+    #     requestHeaderModifier: {}
+    #     responseHeaderModifier: {}
+    #     requestRedirect: {}
+    #     urlRewrite: {}
+    #     extensionRef: {}
+    backendRefs:
+    - name: "<service-name>"
+      port: 80
+      # filters:          # NEVER use filters in backendRefs, unless abolutely necessary
+      # - type: "URLRewrite"      # enum: RequestHeaderModifier, ResponseHeaderModifier, RequestMirror, RequestRedirect, URLRewrite, ExtensionRef
+      #   requestHeaderModifier: {}
+      #   responseHeaderModifier:
+      #   requestRedirect:
+      #   urlRewrite:
+      #   extensionRef:
+  # timeouts:
+  #   request: ""
+  #   backendRequest: ""

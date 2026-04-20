@@ -24,7 +24,6 @@
         "echo \"Tagged: ghcr.io/$GITHUB_REPOSITORY:$VERSION\""
       ],
       "publish": [
-        "uv run semantic-release changelog",
         "uv run semantic-release version || { echo 'No release needed — skipping publish'; exit 0; }",
         "VERSION=$(grep '^version' pyproject.toml | head -1 | sed 's/.*\"\\(.*\\)\"/\\1/')",
         "docker build -t ghcr.io/$GITHUB_REPOSITORY:v$VERSION .",

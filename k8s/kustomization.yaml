@@ -1,0 +1,6 @@
+kind: Kustomization
+
+resources:
+- app.yaml
+- rbac.yaml
+# - network.yaml
