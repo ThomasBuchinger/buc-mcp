@@ -9,9 +9,9 @@ RUN uv sync --frozen --no-dev --no-install-project
 
 FROM python:3.14-slim
 
+USER 1000
 WORKDIR /app
 
-USER nobody
 COPY --from=builder /app/.venv .venv
 COPY src/ src/
 COPY prompts/ prompts/
