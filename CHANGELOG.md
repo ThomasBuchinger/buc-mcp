@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.2.4 (2026-04-20)
+
+### Bug Fixes
+
+- Remove stateless-mode to better support clients
+  ([`6cbc865`](https://github.com/thomasbuchinger/buc-mcp/commit/6cbc8653bfc8a5620f234120e70f9a364230297a))
+
+
 ## v0.2.3 (2026-04-20)
 
 ### Bug Fixes
