@@ -9,21 +9,21 @@ async def test_prompts_listed():
     async with Client(mcp) as client:
         prompts = await client.list_prompts()
     names = [p.name for p in prompts]
-    assert "code_review" in names
+    assert "kubernetes_yaml" in names
 
 
 @pytest.mark.anyio
-async def test_code_review_prompt_default():
+async def test_kubernetes_yaml_skill_is_accessible_as_popmpt():
     async with Client(mcp) as client:
-        result = await client.get_prompt("code_review")
-    assert "python" in result.messages[0].content.text.lower()
+        result = await client.get_prompt("kubernetes_yaml")
+    assert "kubernetes" in result.messages[0].content.text.lower()
 
 
 @pytest.mark.anyio
 async def test_code_review_prompt_language():
     async with Client(mcp) as client:
-        result = await client.get_prompt("code_review", {"language": "typescript"})
-    assert "typescript" in result.messages[0].content.text.lower()
+        result = await client.get_prompt("kubernetes_yaml", {"prompt": "the user can add additional stuff to the prompt, like the word foobar"})
+    assert "foobar" in result.messages[0].content.text.lower()
 
 
 @pytest.mark.anyio

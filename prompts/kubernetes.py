@@ -6,7 +6,7 @@ SKILLS_DIR = Path(__file__).resolve().parent.parent / "skills"
 
 
 @prompt
-def kubernetes_yaml() -> str:
+def kubernetes_yaml(prompt = "") -> str:
     """
     Generate production-ready Kubernetes manifests following best practices for security,
     reliability, and observability. Use this skill any time the user asks to create, write,
@@ -18,5 +18,5 @@ def kubernetes_yaml() -> str:
     if content.startswith("---"):
         end = content.index("---", 3)
         content = content[end + 3:].lstrip("\n")
-    return content
+    return content + prompt
 
