@@ -2,6 +2,17 @@
 
 <!-- version list -->
 
+## v0.2.6 (2026-04-21)
+
+### Bug Fixes
+
+- Link skills with prompt, since clients don't support it yet
+  ([`56b1e29`](https://github.com/thomasbuchinger/buc-mcp/commit/56b1e29b3defda1d9c45eb46821f92c7427548cd))
+
+- Test fail after prompt rename
+  ([`b70f6fb`](https://github.com/thomasbuchinger/buc-mcp/commit/b70f6fb3a8d3c8be46ea24e7fc4462329d6e28b7))
+
+
 ## v0.2.5 (2026-04-20)
 
 ### Bug Fixes
