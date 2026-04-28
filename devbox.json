@@ -1,11 +1,15 @@
 {
-  "$schema":  "https://raw.githubusercontent.com/jetify-com/devbox/0.17.1/.schema/devbox.schema.json",
-  "packages": ["claude-code@latest", "python314@latest", "uv@latest"],
+  "$schema": "https://raw.githubusercontent.com/jetify-com/devbox/0.17.1/.schema/devbox.schema.json",
+  "packages": [
+    "python314@latest",
+    "uv@latest",
+    "opencode@latest"
+  ],
   "env": {
-    "GITHUB_REPOSITORY": "thomasbuchinger/buc-mcp"
+    "GITHUB_REPOSITORY": "thomasbuchinger/buc-mcp",
+    "CONTEXT7_API_KEY": "ctx7sk-fe28535d-c192-49ef-acda-f4682ad8b461"
   },
   "shell": {
-
     "scripts": {
       "test": [
         "uv sync --frozen && uv run pytest"
