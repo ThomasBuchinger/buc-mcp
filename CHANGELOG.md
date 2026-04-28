@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.3.0 (2026-04-28)
+
+### Features
+
+- Add swe skills as prompts
+  ([`a559127`](https://github.com/thomasbuchinger/buc-mcp/commit/a559127e42fad5fa2df030b2a8f1cff136565e64))
+
+
 ## v0.2.6 (2026-04-21)
 
 ### Bug Fixes

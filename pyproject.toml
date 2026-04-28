@@ -1,6 +1,6 @@
 [project]
 name = "buc-mcp"
-version = "0.2.6"
+version = "0.3.0"
 description = "Central MCP server for shared prompts and skills"
 requires-python = ">=3.14"
 dependencies = [
