@@ -2,6 +2,17 @@
 
 <!-- version list -->
 
+## v0.4.4 (2026-04-28)
+
+### Bug Fixes
+
+- Mcp-inspector deployment / proxy
+  ([`f6bd40d`](https://github.com/thomasbuchinger/buc-mcp/commit/f6bd40ddbccdc04d194bd816c3b8ee1190cd9adb))
+
+- Mcp-inspector deployment / proxy
+  ([`d943c97`](https://github.com/thomasbuchinger/buc-mcp/commit/d943c97d994abca9ab852eda3e93cfc38b87afd0))
+
+
 ## v0.4.3 (2026-04-28)
 
 ### Bug Fixes
