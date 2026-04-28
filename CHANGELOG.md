@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.4.1 (2026-04-28)
+
+### Bug Fixes
+
+- Mcp-inspector deployment
+  ([`2dfe45b`](https://github.com/thomasbuchinger/buc-mcp/commit/2dfe45bee2007c5e2c92818d822a0db9a9811ad7))
+
+
 ## v0.4.0 (2026-04-28)
 
 ### Features
