@@ -55,6 +55,44 @@ spec:
             type: RuntimeDefault
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
+      - name: mcp-inspector
+        image: ghcr.io/modelcontextprotocol/inspector:0.21.2-hotfix-3
+        imagePullPolicy: IfNotPresent
+        ports:
+        - name: inspector
+          containerPort: 6274
+        - name: inspector-server
+          containerPort: 6277
+        resources:
+          requests:
+            cpu: "10m"
+            memory: "1Mi"
+          limits:
+            memory: "256Mi"
+        # livenessProbe:
+        #   httpGet:
+        #     path: /health/live
+        #     port: http
+        #   initialDelaySeconds: 3
+        #   periodSeconds: 10
+        # readinessProbe:
+        #   httpGet:
+        #     path: /health/ready
+        #     port: http
+        #   initialDelaySeconds: 5
+        #   periodSeconds: 10
+        securityContext:
+          runAsNonRoot: true
+          readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          privileged: false
+          capabilities:
+            drop:
+            - "ALL"
+          seccompProfile:
+            type: RuntimeDefault
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
       serviceAccountName: buc-mcp
       automountServiceAccountToken: false
       securityContext:
@@ -103,3 +141,9 @@ spec:
   - name: http
     port: 80
     targetPort: 8000
+  - name: inspector
+    port: 6274
+    targetPort: inspector
+  - name: inspector-server
+    port: 6277
+    targetPort: inspector-server
