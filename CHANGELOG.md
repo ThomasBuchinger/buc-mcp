@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.4.3 (2026-04-28)
+
+### Bug Fixes
+
+- Mcp-inspector deployment / env vars
+  ([`2097cf1`](https://github.com/thomasbuchinger/buc-mcp/commit/2097cf1c716224d31d83ac3120c7b269843de04e))
+
+
 ## v0.4.2 (2026-04-28)
 
 ### Bug Fixes
