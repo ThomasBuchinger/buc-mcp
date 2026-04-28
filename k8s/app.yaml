@@ -59,9 +59,9 @@ spec:
         image: ghcr.io/modelcontextprotocol/inspector:0.21.2-hotfix-3
         imagePullPolicy: IfNotPresent
         ports:
-        - name: inspector
+        - name: mcpi
           containerPort: 6274
-        - name: inspector-server
+        - name: mcpi-server
           containerPort: 6277
         resources:
           requests:
@@ -141,9 +141,9 @@ spec:
   - name: http
     port: 80
     targetPort: 8000
-  - name: inspector
+  - name: mcpi
     port: 6274
-    targetPort: inspector
-  - name: inspector-server
+    targetPort: mcpi
+  - name: mcpi-server
     port: 6277
-    targetPort: inspector-server
+    targetPort: mcpi-server
