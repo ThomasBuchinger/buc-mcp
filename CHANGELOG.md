@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.4.0 (2026-04-28)
+
+### Features
+
+- Add mcp-inspactor to deployment
+  ([`9747ad5`](https://github.com/thomasbuchinger/buc-mcp/commit/9747ad5252e1687bf515f261ef51535c0b47735f))
+
+
 ## v0.3.0 (2026-04-28)
 
 ### Features
