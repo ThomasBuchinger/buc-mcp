@@ -63,6 +63,13 @@ spec:
           containerPort: 6274
         - name: mcpi-server
           containerPort: 6277
+        env:
+        - name: DANGEROUSLY_OMIT_AUTH
+          value: "true"
+        - name: HOST
+          value: 0.0.0.0
+        - name: MCP_AUTO_OPEN_ENABLED
+          value: "false"
         resources:
           requests:
             cpu: "10m"
