@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.4.2 (2026-04-28)
+
+### Bug Fixes
+
+- Mcp-inspector deployment / uids
+  ([`b34e0b5`](https://github.com/thomasbuchinger/buc-mcp/commit/b34e0b5f2aee0410c296614b3e0ff7a27f33043a))
+
+
 ## v0.4.1 (2026-04-28)
 
 ### Bug Fixes
