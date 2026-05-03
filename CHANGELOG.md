@@ -2,6 +2,19 @@
 
 <!-- version list -->
 
+## v0.5.1 (2026-05-03)
+
+### Bug Fixes
+
+- Remove MCP inspector deployment
+  ([`f061368`](https://github.com/thomasbuchinger/buc-mcp/commit/f0613689ed946c3baf55e18e5da8dcf161aace5b))
+
+### Documentation
+
+- Update README for multi path architecture
+  ([`ba3efe6`](https://github.com/thomasbuchinger/buc-mcp/commit/ba3efe6ed3947561da61d16753cf830181014443))
+
+
 ## v0.5.0 (2026-05-03)
 
 ### Features
