@@ -1,5 +1,4 @@
 import logging
-import os
 import sys
 import time
 
@@ -8,6 +7,7 @@ from pythonjsonlogger.json import JsonFormatter
 from starlette.requests import Request
 from starlette.responses import JSONResponse, Response
 from starlette.types import ASGIApp, Message
+from src.mcp import get_context7_api_key
 
 
 def configure_logging():
@@ -24,9 +24,6 @@ def configure_logging():
     root.addHandler(handler)
     root.setLevel(logging.INFO)
 
-
-def get_context7_api_key() -> str | None:
-    return os.environ.get("CONTEXT7_API_KEY") or None
 
 
 REQUEST_COUNT = Counter(
@@ -78,7 +75,7 @@ PROXY_ERRORS = Counter(
 )
 
 
-def register_health_routes(app, coding, kubernetes, context7=None):
+def register_health_routes(app, coding, kubernetes, syncSkill, context7=None):
     @app.get("/health/live")
     async def liveness() -> JSONResponse:
         return JSONResponse({"status": "ok"})
@@ -88,6 +85,7 @@ def register_health_routes(app, coding, kubernetes, context7=None):
         try:
             await coding.list_prompts()
             await kubernetes.list_prompts()
+            await syncSkill.list_prompts()
             return JSONResponse({"status": "ready"})
         except Exception as e:
             return JSONResponse(
