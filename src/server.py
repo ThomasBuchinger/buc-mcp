@@ -1,13 +1,17 @@
+import logging
 import os
 from pathlib import Path
 
 from fastapi import FastAPI
-from fastmcp import FastMCP
+from fastmcp import Client, FastMCP
+from fastmcp.client.auth import BearerAuth
+from fastmcp.server import create_proxy
 from fastmcp.server.providers import FileSystemProvider
 from fastmcp.server.providers.skills import SkillsDirectoryProvider
 from fastmcp.utilities.lifespan import combine_lifespans
 
 from src.metrics import (
+    ProxyMetricsMiddleware,
     configure_logging,
     get_context7_api_key,
     register_health_routes,
@@ -15,6 +19,7 @@ from src.metrics import (
 )
 
 configure_logging()
+logger = logging.getLogger(__name__)
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 
@@ -44,20 +49,48 @@ kubernetes.add_provider(
 kubernetes_app = kubernetes.http_app(stateless_http=False)
 
 
+# MCP SkillSync
+syncSkill = FastMCP("buc-skills")
+syncSkill.add_provider(
+    SkillsDirectoryProvider(
+        roots=ROOT_DIR / "skills" / "coding-passive",
+        supporting_files="resources",
+        reload=False,
+    )
+)
+syncSkill.add_provider(
+    SkillsDirectoryProvider(
+        roots=ROOT_DIR / "skills" / "kubernetes-passive",
+        supporting_files="resources",
+        reload=False,
+    )
+)
+syncSkill_app = syncSkill.http_app(stateless_http=False)
+
+
 # MCP Context7 proxy
 context7 = FastMCP("buc-context7")
-@context7.tool(
-    description="This tool does nothing and should not be used. It exists only as a placeholder."
-)
-def noop() -> str:
-    return "This tool does nothing."
+if get_context7_api_key():
+    try:
+        upstream_url = os.environ.get(
+            "CONTEXT7_MCP_URL", "https://mcp.context7.com/mcp"
+        )
+        proxy_server = create_proxy(
+            Client(upstream_url, auth=BearerAuth(token=get_context7_api_key()))
+        )
+        context7.mount(proxy_server)
+    except Exception as e:
+        logger.error("Failed to create context7 proxy: %s", e)
+        raise
 context7_app = context7.http_app(stateless_http=False)
 
 
 # FastAPI
 app = FastAPI(lifespan=combine_lifespans(coding_app.lifespan, context7_app.lifespan))
+app.add_middleware(ProxyMetricsMiddleware, server_name="context7")
 app.mount("/buc-coding/mcp", coding_app)
 app.mount("/buc-kubernetes/mcp", kubernetes_app)
+app.mount("/buc-skills/mcp", syncSkill_app)
 
 if get_context7_api_key():
     app.mount("/buc-context7/mcp", context7_app)

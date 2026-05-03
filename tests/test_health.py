@@ -20,3 +20,10 @@ async def test_metrics_endpoint(http_client):
     response = await http_client.get("/metrics")
     assert response.status_code == 200
     assert b"buc_mcp" in response.content
+
+
+@pytest.mark.anyio
+async def test_proxy_metrics_in_output(http_client):
+    response = await http_client.get("/metrics")
+    assert response.status_code == 200
+    assert b"buc_mcp_proxy" in response.content
