@@ -33,9 +33,9 @@ Built with FastMCP and deployed to Kubernetes, the server exposes prompts and sk
                     │  /buc-kubernetes/mcp ───────┼──► FastMCP "buc-kubernetes"
                     │     (prompts + skills)      │
                     │                             │
-                    │  /buc-context7/mcp ──────────┼──► FastMCP "buc-context7"
-                    │     │                        │
-                    │     └──► ProxyClient ────────┼──► mcp.context7.com
+                    │  /buc-context7/mcp ─────────┼──► FastMCP "buc-context7"
+                    │     │                       │
+                    │     └──► ProxyClient ───────┼──► mcp.context7.com
                     │                             │
                     │  /health/live               │
                     │  /health/ready              │
@@ -144,14 +144,14 @@ patches:
                   - name: CONTEXT7_API_KEY
                     valueFrom:
                       secretKeyRef:
-                        name: context7-api-key
-                        key: api-key
+                        name: buc-mcp-secrets
+                        key: context7
 ```
 
 Create the secret separately:
 
 ```bash
-kubectl create secret generic context7-api-key --from-literal=api-key=<YOUR_KEY>
+kubectl create secret generic buc-mcp-secrets --from-literal=context7=YOUR_KEY --dry-run client -o yaml
 ```
 
 This approach provides flexibility — users can manage the secret lifecycle independently of the deployment manifests.
