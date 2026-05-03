@@ -1,4 +1,5 @@
 import logging
+import os
 import sys
 
 from prometheus_client import Counter, Histogram, generate_latest, CONTENT_TYPE_LATEST
@@ -20,6 +21,10 @@ def configure_logging():
     root.handlers.clear()
     root.addHandler(handler)
     root.setLevel(logging.INFO)
+
+
+def get_context7_api_key() -> str | None:
+    return os.environ.get("CONTEXT7_API_KEY") or None
 
 
 REQUEST_COUNT = Counter(
@@ -53,16 +58,18 @@ ERRORS = Counter(
 )
 
 
-def register_health_routes(mcp):
-    @mcp.custom_route("/health/live", methods=["GET"])
-    async def liveness(request: Request) -> JSONResponse:
+def register_health_routes(app, coding, kubernetes, context7=None):
+    @app.get("/health/live")
+    async def liveness() -> JSONResponse:
         return JSONResponse({"status": "ok"})
 
-    @mcp.custom_route("/health/ready", methods=["GET"])
-    async def readiness(request: Request) -> JSONResponse:
+    @app.get("/health/ready")
+    async def readiness() -> JSONResponse:
         try:
-            await mcp.list_prompts()
-            await mcp.list_resources()
+            await coding.list_prompts()
+            await kubernetes.list_prompts()
+            if get_context7_api_key():
+                await context7.list_tools()
             return JSONResponse({"status": "ready"})
         except Exception as e:
             return JSONResponse(
@@ -71,8 +78,8 @@ def register_health_routes(mcp):
             )
 
 
-def register_metrics_route(mcp):
-    @mcp.custom_route("/metrics", methods=["GET"])
+def register_metrics_route(app):
+    @app.get("/metrics")
     async def metrics(request: Request) -> Response:
         return Response(
             content=generate_latest(),

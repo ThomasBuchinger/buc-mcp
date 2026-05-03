@@ -2,7 +2,7 @@ from pathlib import Path
 
 from fastmcp.prompts import prompt
 
-SKILLS_DIR = Path(__file__).resolve().parent.parent / "skills"
+SKILLS_DIR = Path(__file__).resolve().parent.parent.parent / "skills" / "kubernetes-passive"
 
 
 @prompt
