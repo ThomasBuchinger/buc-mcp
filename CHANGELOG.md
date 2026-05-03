@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.5.2 (2026-05-03)
+
+### Bug Fixes
+
+- Server path. was at /mcp/mcp
+  ([`71423b8`](https://github.com/thomasbuchinger/buc-mcp/commit/71423b89a67c5a82849df3cfa0d1620458911e4c))
+
+
 ## v0.5.1 (2026-05-03)
 
 ### Bug Fixes
