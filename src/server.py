@@ -86,14 +86,14 @@ context7_app = context7.http_app(stateless_http=False)
 
 
 # FastAPI
-app = FastAPI(lifespan=combine_lifespans(coding_app.lifespan, context7_app.lifespan))
+app = FastAPI(lifespan=combine_lifespans(coding_app.lifespan, kubernetes_app.lifespan, syncSkill_app.lifespan, context7_app.lifespan))
 app.add_middleware(ProxyMetricsMiddleware, server_name="context7")
-app.mount("/buc-coding/mcp", coding_app)
-app.mount("/buc-kubernetes/mcp", kubernetes_app)
-app.mount("/buc-skills/mcp", syncSkill_app)
+app.mount("/buc-coding", coding_app)
+app.mount("/buc-kubernetes", kubernetes_app)
+app.mount("/buc-skills", syncSkill_app)
 
 if get_context7_api_key():
-    app.mount("/buc-context7/mcp", context7_app)
+    app.mount("/buc-context7", context7_app)
 
 # Health + metrics on parent app
 register_health_routes(app, coding, kubernetes, context7)
