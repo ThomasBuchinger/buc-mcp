@@ -2,6 +2,20 @@
 
 <!-- version list -->
 
+## v0.5.0 (2026-05-03)
+
+### Features
+
+- Add context7 MCP proxy, because their cert can cause problems with envoy
+  ([`f6fe5c5`](https://github.com/thomasbuchinger/buc-mcp/commit/f6fe5c5c3f73551091ab9413798c0c3210bb1bf6))
+
+- Add frontend-design and test-driven-development skills
+  ([`0c4e266`](https://github.com/thomasbuchinger/buc-mcp/commit/0c4e26685eb4cb51f2107288122e0296960a8a76))
+
+- Split MCP into multiple server paths for different features
+  ([`de7f230`](https://github.com/thomasbuchinger/buc-mcp/commit/de7f230a81918096556d78f48ff116412b4e1f4c))
+
+
 ## v0.4.4 (2026-04-28)
 
 ### Bug Fixes
