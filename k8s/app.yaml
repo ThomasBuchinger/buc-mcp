@@ -55,55 +55,6 @@ spec:
             type: RuntimeDefault
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-      - name: mcp-inspector
-        image: ghcr.io/modelcontextprotocol/inspector:0.21.2-hotfix-3
-        imagePullPolicy: IfNotPresent
-        ports:
-        - name: mcpi
-          containerPort: 6274
-        - name: mcpi-server
-          containerPort: 6277
-        env:
-        - name: DANGEROUSLY_OMIT_AUTH
-          value: "true"
-        - name: HOST
-          value: 0.0.0.0
-        - name: MCP_AUTO_OPEN_ENABLED
-          value: "false"
-        - name: MCP_PROXY_FULL_ADDRESS
-          value: http://inspector-proxy.10.0.0.190.nip.io:80
-        resources:
-          requests:
-            cpu: "10m"
-            memory: "1Mi"
-          limits:
-            memory: "256Mi"
-        # livenessProbe:
-        #   httpGet:
-        #     path: /health/live
-        #     port: http
-        #   initialDelaySeconds: 3
-        #   periodSeconds: 10
-        # readinessProbe:
-        #   httpGet:
-        #     path: /health/ready
-        #     port: http
-        #   initialDelaySeconds: 5
-        #   periodSeconds: 10
-        securityContext:
-          runAsUser: 1000
-          runAsGroup: 1000
-          runAsNonRoot: true
-          readOnlyRootFilesystem: true
-          allowPrivilegeEscalation: false
-          privileged: false
-          capabilities:
-            drop:
-            - "ALL"
-          seccompProfile:
-            type: RuntimeDefault
-        terminationMessagePath: /dev/termination-log
-        terminationMessagePolicy: File
       serviceAccountName: buc-mcp
       automountServiceAccountToken: false
       securityContext:
@@ -152,9 +103,3 @@ spec:
   - name: http
     port: 80
     targetPort: 8000
-  - name: mcpi
-    port: 6274
-    targetPort: mcpi
-  - name: mcpi-server
-    port: 6277
-    targetPort: mcpi-server
