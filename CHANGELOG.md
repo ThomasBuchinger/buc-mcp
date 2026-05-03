@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.5.3 (2026-05-03)
+
+### Bug Fixes
+
+- Add noop-tool to prompt-only servers
+  ([`77606e4`](https://github.com/thomasbuchinger/buc-mcp/commit/77606e4daca188f363744ddebbf55e7527a3fd96))
+
+
 ## v0.5.2 (2026-05-03)
 
 ### Bug Fixes
