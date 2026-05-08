@@ -1,0 +1,48 @@
+{
+  "mcpServers": {
+    "browser-use": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": [
+        "--from",
+        "browser-use[cli]",
+        "browser-use",
+        "--mcp"
+      ],
+      "env": {
+        "OPENAI_API_KEY": "aaa",
+        "OPENAI_BASE_URL": "http://10.0.0.190:32434/v1",
+        "OPENAI_MODEL_NAME": "qwen",
+        "BROWSER_USE_HEADLESS": "false"
+      }
+    },
+    "exa": {
+      "type": "remote",
+      "url": "http://10.0.0.190:8080/exa/mcp"
+    },
+    "k8s-ai": {
+      "type": "remote",
+      "url": "http://10.0.0.190:8080/k8s-ai/mcp"
+    },
+    "buc-mcp": {
+      "type": "remote",
+      "url": "http://10.0.0.190:8080/buc-coding/mcp"
+    },
+    "buc-mcp-context7": {
+      "type": "remote",
+      "url": "http://10.0.0.190:8080/buc-context7/mcp"
+    },
+    "context7": {
+      "type": "remote",
+      "url": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+      }
+    },
+    "gh-grep": {
+      // Vercel Github search
+      "type": "remote",
+      "url": "http://10.0.0.190:8080/gh-grep/mcp"
+    }
+  }
+}
