@@ -2,6 +2,27 @@
 
 <!-- version list -->
 
+## v0.6.0 (2026-05-08)
+
+### Bug Fixes
+
+- Typo in file path for new prompts
+  ([`75608df`](https://github.com/thomasbuchinger/buc-mcp/commit/75608dfa69be8590ecba98677ea6300a2a7762ef))
+
+### Documentation
+
+- Add ADRs for existing decisions
+  ([`2f0ec23`](https://github.com/thomasbuchinger/buc-mcp/commit/2f0ec23f1505ab850479cb8e31401393ca25f6da))
+
+### Features
+
+- Add additional skills by Matt Pocock
+  ([`348e27c`](https://github.com/thomasbuchinger/buc-mcp/commit/348e27ce146d4f057667356fcf7f5353683cc9e1))
+
+- Add mcp config template (prep for sync feature)
+  ([`75a8673`](https://github.com/thomasbuchinger/buc-mcp/commit/75a867300fa6a83df37b01df01233471afbf5de1))
+
+
 ## v0.5.3 (2026-05-03)
 
 ### Bug Fixes
