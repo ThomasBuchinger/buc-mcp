@@ -16,6 +16,7 @@ COPY --from=builder /app/.venv .venv
 COPY src/ src/
 COPY prompts/ prompts/
 COPY skills/ skills/
+COPY scripts/ scripts/
 
 ENV PATH="/app/.venv/bin:$PATH"
 
