@@ -2,6 +2,17 @@
 
 <!-- version list -->
 
+## v0.7.0 (2026-05-08)
+
+### Features
+
+- Add skill-sync script
+  ([`5de4791`](https://github.com/thomasbuchinger/buc-mcp/commit/5de479155897b959ac0e75d3812f98424f5355f8))
+
+- Add TDD skill by Matt Pocock
+  ([`df18a5a`](https://github.com/thomasbuchinger/buc-mcp/commit/df18a5a8806dbe10c5681327c27e8e88c9269adb))
+
+
 ## v0.6.0 (2026-05-08)
 
 ### Bug Fixes
