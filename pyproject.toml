@@ -9,6 +9,7 @@ dependencies = [
     "uvicorn[standard]",
     "prometheus-client",
     "python-json-logger",
+    "python-frontmatter",
 ]
 
 [project.scripts]

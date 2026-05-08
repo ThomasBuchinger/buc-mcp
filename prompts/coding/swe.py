@@ -1,55 +1,47 @@
 from pathlib import Path
 
 from fastmcp.prompts import prompt
+from src.utils import skill_content, skill_description
 
-SKILLS_DIR = Path(__file__).resolve().parent.parent.parent / "skills" / "coding-prompts"
+SKILLS_DIR = Path(__file__).resolve().parent.parent.parent / "skills"
 
 
-@prompt
+@prompt(description=skill_description(SKILLS_DIR / "coding-prompts" / "swe-prd-create"))
 def prd_create(prompt = "") -> str:
-    """
-    Create documentation-first PRDs that guide development through user-facing content
-    """
-    content = (SKILLS_DIR / "swe-prd-create" / "SKILL.md").read_text()
-    # Strip YAML frontmatter
-    if content.startswith("---"):
-        end = content.index("---", 3)
-        content = content[end + 3:].lstrip("\n")
+    content = skill_content(SKILLS_DIR / "coding-prompts" / "swe-prd-create")
     return content + prompt
 
-@prompt
+
+@prompt(description=skill_description(SKILLS_DIR / "coding-prompts" / "swe-prd-start"))
 def prd_start(prompt = "") -> str:
-    """
-    Start working on a PRD implementation
-    """
-    content = (SKILLS_DIR / "swe-prd-start" / "SKILL.md").read_text()
-    # Strip YAML frontmatter
-    if content.startswith("---"):
-        end = content.index("---", 3)
-        content = content[end + 3:].lstrip("\n")
+    content = skill_content(SKILLS_DIR / "coding-prompts" / "swe-prd-start")
     return content + prompt
 
-@prompt
+
+@prompt(description=skill_description(SKILLS_DIR / "coding-prompts" / "swe-prd-next"))
 def prd_next(prompt = "") -> str:
-    """
-    Analyze existing PRD to identify and recommend the single highest-priority task to work on next
-    """
-    content = (SKILLS_DIR / "swe-prd-next" / "SKILL.md").read_text()
-    # Strip YAML frontmatter
-    if content.startswith("---"):
-        end = content.index("---", 3)
-        content = content[end + 3:].lstrip("\n")
+    content = skill_content(SKILLS_DIR / "coding-prompts" / "swe-prd-next")
     return content + prompt
 
-@prompt
+
+@prompt(description=skill_description(SKILLS_DIR / "coding-prompts" / "swe-prd-update-decisions"))
 def prd_update_decisions(prompt = "") -> str:
-    """
-    Update PRD based on design decisions and strategic changes made during conversations
-    """
-    content = (SKILLS_DIR / "swe-prd-update-decisions" / "SKILL.md").read_text()
-    # Strip YAML frontmatter
-    if content.startswith("---"):
-        end = content.index("---", 3)
-        content = content[end + 3:].lstrip("\n")
+    content = skill_content(SKILLS_DIR / "coding-prompts" / "swe-prd-update-decisions")
     return content + prompt
 
+
+@prompt(description=skill_description(SKILLS_DIR / "coding-passive" / "mattpocock-grill-me"))
+def grill_me(prompt = "") -> str:
+    content = skill_content(SKILLS_DIR / "coding-passive" / "mattpocock-grill-me")
+    return content + prompt
+
+
+@prompt(description=skill_description(SKILLS_DIR / "coding-passive" / "mattpocock-to-prd"))
+def grill_to_prd(prompt = "") -> str:
+    content = skill_content(SKILLS_DIR / "coding-passive" / "mattpocock-to-prd")
+    return content + prompt
+
+@prompt(description=skill_description(SKILLS_DIR / "coding-passive" / "mattpocock-prd-to-plan"))
+def prd_to_plan(prompt = "") -> str:
+    content = skill_content(SKILLS_DIR / "coding-passive" / "mattpocock-prd-to-plan")
+    return content + prompt
