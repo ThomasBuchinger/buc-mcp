@@ -1,5 +1,9 @@
 .claude
 .devbox
 .venv
+node_modules
+package.json
+package-lock.json
+.ralph
 
 __pycache__

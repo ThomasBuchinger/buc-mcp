@@ -3,7 +3,9 @@
   "packages": [
     "python314@latest",
     "uv@latest",
-    "opencode@latest"
+    "opencode@latest",
+    "bun@latest",
+    "bats@latest"
   ],
   "env": {
     "OPENCODE_CONFIG":   ".agents/opencode.json",

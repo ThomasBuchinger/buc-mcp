@@ -1,7 +1,8 @@
 import logging
 from pathlib import Path
 
-from fastapi import FastAPI
+from fastapi import FastAPI, Request
+from fastapi.responses import PlainTextResponse
 from fastmcp.utilities.lifespan import combine_lifespans
 
 from src.metrics import (
@@ -45,6 +46,16 @@ if get_context7_api_key():
 # Health + metrics on parent app
 register_health_routes(app, coding, kubernetes, syncSkill, context7)
 register_metrics_route(app)
+
+
+@app.get("/sync.sh", response_class=PlainTextResponse)
+async def sync_sh(request: Request):
+    sync_sh = Path(__file__).resolve().parent.parent / "scripts" / "sync.sh"
+
+    content = sync_sh.read_text()
+    host = request.headers.get("host", "localhost:8000")
+    scheme = request.headers.get("x-forwarded-proto", "http")
+    return  f"SERVER_URL='{scheme}://{host}'\n" + content
 
 
 def main():

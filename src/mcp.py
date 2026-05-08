@@ -65,7 +65,7 @@ syncSkill.add_provider(
         reload=False,
     )
 )
-syncSkill_app = syncSkill.http_app(stateless_http=False)
+syncSkill_app = syncSkill.http_app(stateless_http=True)
 create_noop_tool(syncSkill)
 
 # MCP Context7 proxy
