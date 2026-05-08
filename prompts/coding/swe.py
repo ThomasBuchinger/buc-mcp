@@ -36,12 +36,12 @@ def grill_me(prompt = "") -> str:
     return content + prompt
 
 
-@prompt(description=skill_description(SKILLS_DIR / "coding-passive" / "mattpocock-to-prd"))
+@prompt(description=skill_description(SKILLS_DIR / "coding-prompts" / "mattpocock-to-prd"))
 def grill_to_prd(prompt = "") -> str:
-    content = skill_content(SKILLS_DIR / "coding-passive" / "mattpocock-to-prd")
+    content = skill_content(SKILLS_DIR / "coding-prompts" / "mattpocock-to-prd")
     return content + prompt
 
-@prompt(description=skill_description(SKILLS_DIR / "coding-passive" / "mattpocock-prd-to-plan"))
+@prompt(description=skill_description(SKILLS_DIR / "coding-prompts" / "mattpocock-prd-to-plan"))
 def prd_to_plan(prompt = "") -> str:
-    content = skill_content(SKILLS_DIR / "coding-passive" / "mattpocock-prd-to-plan")
+    content = skill_content(SKILLS_DIR / "coding-prompts" / "mattpocock-prd-to-plan")
     return content + prompt
