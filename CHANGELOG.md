@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.7.1 (2026-05-08)
+
+### Bug Fixes
+
+- Add script to Docker container
+  ([`b08d00e`](https://github.com/thomasbuchinger/buc-mcp/commit/b08d00ed4c538794811a896526018db3ff23bd90))
+
+
 ## v0.7.0 (2026-05-08)
 
 ### Features
