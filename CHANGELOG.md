@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.8.1 (2026-05-23)
+
+### Bug Fixes
+
+- Update MCP configs endpoint
+  ([`66af5bf`](https://github.com/thomasbuchinger/buc-mcp/commit/66af5bff8a043f7d2f35953c10ff50b2d3b12a5d))
+
+
 ## v0.8.0 (2026-05-23)
 
 ### Features
