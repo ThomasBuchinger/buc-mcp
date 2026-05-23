@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.7.2 (2026-05-23)
+
+### Bug Fixes
+
+- Set MCP to be stateful to mkae sure it plays nice with MCP proxies
+  ([`6f3a615`](https://github.com/thomasbuchinger/buc-mcp/commit/6f3a615525ec7aa7a3bca36a5f7968f0574473f4))
+
+
 ## v0.7.1 (2026-05-08)
 
 ### Bug Fixes
