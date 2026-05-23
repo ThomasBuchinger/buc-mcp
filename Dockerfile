@@ -17,6 +17,7 @@ COPY src/ src/
 COPY prompts/ prompts/
 COPY skills/ skills/
 COPY scripts/ scripts/
+COPY mcpconfigs/ mcpconfigs/
 
 ENV PATH="/app/.venv/bin:$PATH"
 

@@ -9,16 +9,16 @@ def client():
     return TestClient(app)
 
 
-def test_mcps_json_default_agent_is_opencode(client):
-    response = client.get("/mcps.json")
+def test_mcp_json_default_agent_is_opencode(client):
+    response = client.get("/mcp.json")
     assert response.status_code == 200
     data = response.json()
     assert "mcp" in data
     assert "mcpServers" not in data
 
 
-def test_mcps_json_opencode_format(client):
-    response = client.get("/mcps.json?agent=opencode")
+def test_mcp_json_opencode_format(client):
+    response = client.get("/mcp.json?agent=opencode")
     assert response.status_code == 200
     data = response.json()
     assert "mcp" in data
@@ -30,8 +30,8 @@ def test_mcps_json_opencode_format(client):
     assert browser_use["type"] == "stdio"
 
 
-def test_mcps_json_claude_format(client):
-    response = client.get("/mcps.json?agent=claude")
+def test_mcp_json_claude_format(client):
+    response = client.get("/mcp.json?agent=claude")
     assert response.status_code == 200
     data = response.json()
     assert "mcpServers" in data
@@ -43,15 +43,15 @@ def test_mcps_json_claude_format(client):
     assert browser_use["type"] == "stdio"
 
 
-def test_mcps_json_preserves_url(client):
-    response = client.get("/mcps.json?agent=opencode")
+def test_mcp_json_preserves_url(client):
+    response = client.get("/mcp.json?agent=opencode")
     assert response.status_code == 200
     data = response.json()
     assert data["mcp"]["exa"]["url"] == "http://10.0.0.190:8080/exa/mcp"
 
 
-def test_mcps_json_skips_schema(client):
-    response = client.get("/mcps.json?agent=opencode")
+def test_mcp_json_skips_schema(client):
+    response = client.get("/mcp.json?agent=opencode")
     assert response.status_code == 200
     data = response.json()
     assert "$schema" not in data
@@ -59,16 +59,16 @@ def test_mcps_json_skips_schema(client):
         assert "$schema" not in server
 
 
-def test_mcps_json_skips_enabled(client):
-    response = client.get("/mcps.json?agent=opencode")
+def test_mcp_json_skips_enabled(client):
+    response = client.get("/mcp.json?agent=opencode")
     assert response.status_code == 200
     data = response.json()
     for server in data.get("mcp", data.get("mcpServers", {}).values()):
         assert "enabled" not in server
 
 
-def test_mcps_json_preserves_headers(client):
-    response = client.get("/mcps.json?agent=opencode")
+def test_mcp_json_preserves_headers(client):
+    response = client.get("/mcp.json?agent=opencode")
     assert response.status_code == 200
     data = response.json()
     context7 = data["mcp"].get("context7", {})
@@ -76,13 +76,11 @@ def test_mcps_json_preserves_headers(client):
     assert context7["headers"]["CONTEXT7_API_KEY"] == "{env:CONTEXT7_API_KEY}"
 
 
-def test_mcps_json_preserves_env(client):
-    response = client.get("/mcps.json?agent=opencode")
+def test_mcp_json_preserves_env(client):
+    response = client.get("/mcp.json?agent=opencode")
     assert response.status_code == 200
     data = response.json()
     browser_use = data["mcp"].get("browser-use", {})
     assert "env" in browser_use
     assert browser_use["env"]["OPENAI_API_KEY"] == "aaa"
-
-
 

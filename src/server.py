@@ -26,7 +26,7 @@ from src.mcp import (
 )
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
-MCPS_PATH = ROOT_DIR / "mcps" / "mcps.json"
+MCP_CONFIG_PATH = ROOT_DIR / "mcpconfigs" / "mcp.json"
 
 configure_logging()
 logger = logging.getLogger(__name__)
@@ -61,10 +61,10 @@ async def sync_sh(request: Request):
     return f"SERVER_URL='{scheme}://{host}'\n" + sync_sh.read_text()
 
 
-@app.get("/mcps.json")
-async def mcps_json(request: Request):
+@app.get("/mcp.json")
+async def mcp_json(request: Request):
     agent = request.query_params.get("agent", "opencode")
-    data = json5.loads(MCPS_PATH.read_text())
+    data = json5.loads(MCP_CONFIG_PATH.read_text())
     servers = data.get("mcp", data.get("mcpServers", {}))
     if agent == "claude":
         # Claude uses "mcpServers" key and "http" type for remote servers

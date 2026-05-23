@@ -367,11 +367,14 @@ sync_skill_main() {
             [[ -z "$resource_uri" ]] && continue
 
             relative_path="${resource_uri#skill://}"
+
             if [[ "$relative_path" == "$skill_name/SKILL.md" ]]; then
                 local_path="$skill_dir/SKILL.md"
             else
-                local_path="$skill_dir/${relative_path}"
+                local_path="$skill_dir/${relative_path#$skill_name/}"
             fi
+
+            [[ "$local_path" == */_manifest ]] && continue
 
             sync_file "$resource_uri" "$local_path" "$conflict"
         done <<< "$resources"
@@ -398,7 +401,7 @@ sync_mcp_main() {
 
     echo "Fetching MCP server list from server..."
     local config_json
-    config_json=$(curl -s "$SERVER_URL/mcps.json?agent=$CLIENT_AGENT")
+    config_json=$(curl -s "$SERVER_URL/mcp.json?agent=$CLIENT_AGENT")
     if [[ -z "$config_json" ]]; then
         log "error" "Failed to fetch MCP config"
         exit 1
