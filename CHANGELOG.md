@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.8.2 (2026-05-23)
+
+### Bug Fixes
+
+- Improve naming and paths
+  ([`4f27898`](https://github.com/thomasbuchinger/buc-mcp/commit/4f278989c97eaa01bafdf4a98c39f88e32317fc6))
+
+
 ## v0.8.1 (2026-05-23)
 
 ### Bug Fixes
