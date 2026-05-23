@@ -43,13 +43,11 @@ def test_mcps_json_claude_format(client):
     assert browser_use["type"] == "stdio"
 
 
-def test_mcps_json_substitutes_host_header(client):
-    response = client.get("/mcps.json", headers={"Host": "myhost:9000"})
+def test_mcps_json_preserves_url(client):
+    response = client.get("/mcps.json?agent=opencode")
     assert response.status_code == 200
     data = response.json()
-    for server in data.get("mcp", data.get("mcpServers", {}).values()):
-        if "url" in server:
-            assert "myhost:9000" in server["url"]
+    assert data["mcp"]["exa"]["url"] == "http://10.0.0.190:8080/exa/mcp"
 
 
 def test_mcps_json_skips_schema(client):
@@ -87,13 +85,4 @@ def test_mcps_json_preserves_env(client):
     assert browser_use["env"]["OPENAI_API_KEY"] == "aaa"
 
 
-def test_mcps_json_x_forwarded_proto(client):
-    response = client.get(
-        "/mcps.json",
-        headers={"Host": "myhost:443", "X-Forwarded-Proto": "https"}
-    )
-    assert response.status_code == 200
-    data = response.json()
-    for server in data["mcp"].values():
-        if "url" in server:
-            assert server["url"].startswith("https://")
+
