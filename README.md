@@ -20,7 +20,7 @@ Configuration Management Scripts
 
 | Script       | Description |
 | -------------|-------------|
-| `/skills.sh` | (Not Implemented yet) Sync Skills into the skills directory |
+| `/sync.sh`   |Sync Skills or MCP Configs. Run `curl URL/sync.sh \| bash` |
 | `/models.sh` | (Not Implemented yet) Configure available models |
 
 

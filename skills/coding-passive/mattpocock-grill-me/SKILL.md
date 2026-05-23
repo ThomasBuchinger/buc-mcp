@@ -34,7 +34,7 @@ Most repos have a single context:
 └── src/
 ```
 
-Create files lazily — only when you have something to write. If no `.agents/CONTEXT.md` exists, create one when the first term is resolved. If no `.docs/adr/` exists, create it when the first ADR is needed.
+Create files lazily — only when you have something to write. If no `.agents/CONTEXT.md` exists, create one when the first term is resolved. If no `/docs/adr/` exists, create it when the first ADR is needed.
 
 ## During the session
 
