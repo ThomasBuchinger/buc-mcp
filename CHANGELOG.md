@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.8.0 (2026-05-23)
+
+### Features
+
+- Sync.sh can sync skills
+  ([`1cabab0`](https://github.com/thomasbuchinger/buc-mcp/commit/1cabab04ff45c7da802f17db1dc474f1a53cf792))
+
+
 ## v0.7.2 (2026-05-23)
 
 ### Bug Fixes
