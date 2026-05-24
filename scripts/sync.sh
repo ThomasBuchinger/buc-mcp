@@ -154,20 +154,6 @@ select_skills() {
     fi
 }
 
-prompt_yes_no() {
-    local message="$1"
-    local answer
-    while true; do
-        printf "%s (y/n): " "$message" >&2
-        read -r answer
-        case "${answer,,}" in
-            y|yes) echo "y"; return 0 ;;
-            n|no) echo "n"; return 0 ;;
-            *) echo "Invalid. Enter y or n." >&2 ;;
-        esac
-    done
-}
-
 log() {
     local level="$1"
     local message="$2"
@@ -283,21 +269,21 @@ merge_configs() {
 
     local merged
     if [[ -f "$existing_config_path" ]]; then
-        merged=$(cat "$existing_config_path")
+        merged=$(sed '/^[[:space:]]*\/\//d' "$existing_config_path" | jq -c '.')
     else
         merged='{}'
     fi
 
-    local server_name server_json
-    while IFS= read -r server_name; do
-        [[ -z "$server_name" ]] && continue
-        server_json=$(echo "$template_json" | jq -c ".${key_name}[\"$server_name\"]")
-        if [[ -n "$server_json" && "$server_json" != "null" ]]; then
-            merged=$(echo "$merged" | jq -c --arg name "$server_name" --argjson val "$server_json" ".${key_name}[\$name] = \$val")
-        fi
-    done <<< "$selected_servers"
+    local tmpl_file
+    tmpl_file=$(mktemp)
+    printf '%s\n' "$template_json" > "$tmpl_file"
 
-    echo "$merged"
+    echo "$merged" | jq -c --slurpfile template "$tmpl_file" --arg servers "$selected_servers" --arg key "$key_name" '
+        ($servers | split("\n") | map(select(length > 0))) as $sel |
+        ($template[0][$key] // {} | to_entries | map(select(.key as $k | $sel | index($k)))) as $entries |
+        .[$key] = ((.[$key] // {}) + ($entries | from_entries))
+    '
+    rm -f "$tmpl_file"
 }
 
 merge_and_write() {
@@ -430,24 +416,23 @@ sync_mcp_main() {
     echo "$selected_servers"
 
     case "$conflict" in
-        dry-run)
-            echo "=== Dry-run: would write the following config ==="
-            merge_configs "$config_json" "$selected_servers" "$config_file"
-            ;;
         force)
-            echo "[force] Writing config to $config_file"
+            echo "[force] Merging servers into $config_file"
             merge_and_write "$config_json" "$selected_servers" "$config_file"
             ;;
         sync)
-            if [[ -f "$config_file" ]]; then
-                local should_write
-                should_write=$(prompt_yes_no "Config file exists. Overwrite?")
-                if [[ "$should_write" == "n" ]]; then
-                    echo "Skipping config sync."
-                    return 0
-                fi
-            fi
             merge_and_write "$config_json" "$selected_servers" "$config_file"
+            ;;
+        dry-run)
+            local merged
+            merged=$(merge_configs "$config_json" "$selected_servers" "$config_file")
+            if [[ -f "$config_file" ]]; then
+                echo "=== Dry-run: diff between $config_file and merged result ==="
+                diff "$config_file" <(echo "$merged" | jq '.') 2>&1 || true
+            else
+                echo "=== Dry-run: would create $config_file with ==="
+                echo "$merged" | jq '.'
+            fi
             ;;
     esac
 
