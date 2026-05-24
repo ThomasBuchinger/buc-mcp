@@ -2,6 +2,19 @@
 
 <!-- version list -->
 
+## v0.8.3 (2026-05-24)
+
+### Bug Fixes
+
+- Improve mcp sync script
+  ([`a4d7775`](https://github.com/thomasbuchinger/buc-mcp/commit/a4d7775dc05c9452c126da1ef562500779d91f00))
+
+### Chores
+
+- Restructure skills directory
+  ([`9727b10`](https://github.com/thomasbuchinger/buc-mcp/commit/9727b105ff3c2f173784b87c49b57a6fe31234a5))
+
+
 ## v0.8.2 (2026-05-23)
 
 ### Bug Fixes
