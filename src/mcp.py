@@ -7,6 +7,7 @@ from fastmcp.client.auth import BearerAuth
 from fastmcp.server import create_proxy
 from fastmcp.server.providers import FileSystemProvider
 from fastmcp.server.providers.skills import SkillsDirectoryProvider
+from fastmcp.server.transforms import ResourcesAsTools
 
 def get_context7_api_key() -> str | None:
     return os.environ.get("CONTEXT7_API_KEY") or None
@@ -33,8 +34,8 @@ coding.add_provider(
         reload=False,
     )
 )
+coding.add_transform(ResourcesAsTools(coding))
 coding_app = coding.http_app(stateless_http=False)
-create_noop_tool(coding)
 
 # MCP kubernetes
 kubernetes = FastMCP("buc-kubernetes")
@@ -54,6 +55,13 @@ syncSkill = FastMCP("buc-skills")
 syncSkill.add_provider(
     SkillsDirectoryProvider(
         roots=ROOT_DIR / "skills" / "coding-passive",
+        supporting_files="resources",
+        reload=False,
+    )
+)
+syncSkill.add_provider(
+    SkillsDirectoryProvider(
+        roots=ROOT_DIR / "skills" / "coding",
         supporting_files="resources",
         reload=False,
     )

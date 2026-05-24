@@ -10,17 +10,14 @@ async def test_prompts_listed():
     async with Client(coding) as client:
         prompts = await client.list_prompts()
     names = [p.name for p in prompts]
-    assert "prd_create" in names
-    assert "prd_start" in names
-    assert "prd_next" in names
-    assert "prd_update_decisions" in names
+    assert "grill_me" in names
 
 
 @pytest.mark.anyio
 async def test_prompts_extendable():
     async with Client(coding) as client:
         result = await client.get_prompt(
-            "prd_create",
+            "grill_me",
             {
                 "prompt": "the user can add additional stuff to the prompt, like the word foobar"
             },
@@ -37,11 +34,12 @@ async def test_skills_discovered():
 
 
 @pytest.mark.anyio
-async def test_traintimes_skill_readable():
+async def test_frontenddesign_skill_readable():
     async with Client(coding) as client:
         resources = await client.list_resources()
     uris = [str(r.uri) for r in resources]
-    traintimes_uri = next(uri for uri in uris if "frontend-design" in uri)
+    print(uris)
+    frontenddesign_uri = next(uri for uri in uris if "frontend-design" in uri)
     async with Client(coding) as client:
-        content = await client.read_resource(traintimes_uri)
+        content = await client.read_resource(frontenddesign_uri)
     assert content
