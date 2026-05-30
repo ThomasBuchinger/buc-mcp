@@ -17,12 +17,29 @@
       }
     },
     "exa": {
+      // Generic Internet Search Engine
       "type": "remote",
       "url": "http://10.0.0.190:8080/exa/mcp"
     },
     "k8s-ai": {
+      // RedHat Kubernetes MCP @ai
       "type": "remote",
       "url": "http://10.0.0.190:8080/k8s-ai/mcp"
+    },
+    "k8s-prod": {
+      // RedHat Kubernetes MCP @prod
+      "type": "remote",
+      "url": "http://k8s-mcp.10.0.0.21.nip.io/mcp"
+    },
+    "k8s-evergreen": {
+      // RedHat Kubernetes MCP @evergreen
+      "type": "remote",
+      "url": "http://k8s-mcp.10.0.0.16.nip.io/mcp"
+    },
+    "flux-evergreen": {
+      // Flux MCP @evergreen
+      "type": "remote",
+      "url": "http://flux-mcp.10.0.0.16.nip.io/mcp"
     },
     "buc-mcp": {
       "type": "remote",
