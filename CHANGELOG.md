@@ -2,6 +2,19 @@
 
 <!-- version list -->
 
+## v0.9.0 (2026-05-31)
+
+### Bug Fixes
+
+- Naming conflict
+  ([`54902fe`](https://github.com/thomasbuchinger/buc-mcp/commit/54902feda606a03d248d452229b2d731269a333e))
+
+### Features
+
+- Add Kubernetes Cluster MCPs
+  ([`77dfe58`](https://github.com/thomasbuchinger/buc-mcp/commit/77dfe58513ff1b65307a427ff32eee977240d3a9))
+
+
 ## v0.8.3 (2026-05-24)
 
 ### Bug Fixes
