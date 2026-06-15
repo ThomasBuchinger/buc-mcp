@@ -196,6 +196,54 @@
         }
       }
     },
+    "skills@latest": {
+      "last_modified": "2026-05-31T16:57:23Z",
+      "resolved": "github:NixOS/nixpkgs/3109eaae18e09d0b8aef23dc2579e7d94b8d4b4e#skills",
+      "source": "devbox-search",
+      "version": "1.5.9",
+      "systems": {
+        "aarch64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/3019rvcznlw140dv9hciab61120bfydy-skills-1.5.9",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/3019rvcznlw140dv9hciab61120bfydy-skills-1.5.9"
+        },
+        "aarch64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/q8sy7xniv4d0k13986sjqqzq09cmrggb-skills-1.5.9",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/q8sy7xniv4d0k13986sjqqzq09cmrggb-skills-1.5.9"
+        },
+        "x86_64-darwin": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/py1899jqbyh2mhyh4dddnw4jl3imli6a-skills-1.5.9",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/py1899jqbyh2mhyh4dddnw4jl3imli6a-skills-1.5.9"
+        },
+        "x86_64-linux": {
+          "outputs": [
+            {
+              "name": "out",
+              "path": "/nix/store/la6ymlcnmla6r6bhcvgxxj0gc08ykadn-skills-1.5.9",
+              "default": true
+            }
+          ],
+          "store_path": "/nix/store/la6ymlcnmla6r6bhcvgxxj0gc08ykadn-skills-1.5.9"
+        }
+      }
+    },
     "uv@latest": {
       "last_modified": "2026-05-15T18:21:44Z",
       "resolved": "github:NixOS/nixpkgs/d233902339c02a9c334e7e593de68855ad26c4cb#uv",

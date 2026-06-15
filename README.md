@@ -16,12 +16,34 @@ AI Agents rely a lot on local client configuration. While most features are supp
 | `/buc-context7/mcp`   | proxy to `https://mcp.context7.com/mcp`, because envoy has problems with their HTTPS-Cert |
 | `/buc-skills/mcp`     | Skills over MCP isn't well supported by clients yet. This MCP exposes skills to be downloaded into the clients skills/ directory|
 
-Configuration Management Scripts
+## Configuration Management
 
-| Script       | Description |
-| -------------|-------------|
-| `/sync.sh`   |Sync Skills or MCP Configs. Run `curl URL/sync.sh \| bash` |
-| `/models.sh` | (Not Implemented yet) Configure available models |
+This MCP server provides a script to update agent client configuration:
+
+* **Skills**: Can be managed through the script or the `skills` nix package via devbox
+* **MCP Server**: Update the MCP server configuration (currently only Opencode)
+* **Models**: 
+
+```shell
+curl https://buc-mcp.10.0.0.190.nip.io/sync.sh | bash
+```
+ (Skills, MCP Server, Models). Skills can be managed through the script or the `skills` nix package via devbox
+
+### Recommended skills
+
+```shell
+devbox add skills
+skills add vercel-labs/skills --skill find-skills --project --yes
+skills add https://github.com/thomasbuchinger 
+
+# Coding
+skills add obra/superpowers
+skills add mattpocock/skills
+
+# Kubernetes
+skills ...
+```
+
 
 
 ## Architecture

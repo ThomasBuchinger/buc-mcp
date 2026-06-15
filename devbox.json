@@ -5,7 +5,8 @@
     "uv@latest",
     "opencode@latest",
     "bun@latest",
-    "bats@latest"
+    "bats@latest",
+    "skills@latest"
   ],
   "env": {
     "OPENCODE_CONFIG":   ".agents/opencode.json",

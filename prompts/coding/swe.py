@@ -25,7 +25,7 @@ def tdd(prompt = "") -> str:
     return content + prompt
 
 @prompt(description=skill_description(SKILLS_DIR / "coding" / "mattpocock_to-prd"))
-def frill_me_to_prd(prompt = "") -> str:
+def grill_me_to_prd(prompt = "") -> str:
     content = skill_content(SKILLS_DIR / "coding" / "mattpocock_to-prd")
     return content + prompt
 
