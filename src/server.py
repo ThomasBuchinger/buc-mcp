@@ -23,6 +23,8 @@ from src.mcp import (
     kubernetes_app,
     syncSkill,
     syncSkill_app,
+    mcp_kanban,
+    kanban_app,
 )
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
@@ -38,18 +40,20 @@ app = FastAPI(
         kubernetes_app.lifespan,
         syncSkill_app.lifespan,
         context7_app.lifespan,
+        kanban_app.lifespan,
     )
 )
 app.add_middleware(ProxyMetricsMiddleware, server_name="context7")
 app.mount("/buc-coding", coding_app)
 app.mount("/buc-kubernetes", kubernetes_app)
 app.mount("/buc-skills", syncSkill_app)
+app.mount("/buc-kanban", kanban_app)
 
 if get_context7_api_key():
     app.mount("/buc-context7", context7_app)
 
 # Health + metrics on parent app
-register_health_routes(app, coding, kubernetes, syncSkill, context7)
+register_health_routes(app, coding, kubernetes, syncSkill, context7, mcp_kanban)
 register_metrics_route(app)
 
 

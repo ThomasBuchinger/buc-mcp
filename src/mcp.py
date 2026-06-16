@@ -91,3 +91,7 @@ if get_context7_api_key():
         logger.error("Failed to create context7 proxy: %s", e)
         raise
 context7_app = context7.http_app(stateless_http=False)
+
+
+mcp_kanban = FastMCP("buc-kanban")
+kanban_app = mcp_kanban.http_app(stateless_http=False)

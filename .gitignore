@@ -1,9 +1,6 @@
 .claude
 .devbox
-.venv
-node_modules
-package.json
-package-lock.json
-.ralph
-
+.venv/
+.pytest_cache
 __pycache__
+

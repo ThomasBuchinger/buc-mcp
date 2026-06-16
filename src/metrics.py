@@ -75,7 +75,7 @@ PROXY_ERRORS = Counter(
 )
 
 
-def register_health_routes(app, coding, kubernetes, syncSkill, context7=None):
+def register_health_routes(app, coding, kubernetes, syncSkill, context7=None, kanban=None):
     @app.get("/health/live")
     async def liveness() -> JSONResponse:
         return JSONResponse({"status": "ok"})
@@ -86,6 +86,8 @@ def register_health_routes(app, coding, kubernetes, syncSkill, context7=None):
             await coding.list_prompts()
             await kubernetes.list_prompts()
             await syncSkill.list_prompts()
+            if kanban is not None:
+                await kanban.list_tools()
             return JSONResponse({"status": "ready"})
         except Exception as e:
             return JSONResponse(
