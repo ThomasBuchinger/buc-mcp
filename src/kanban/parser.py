@@ -46,11 +46,7 @@ TEST_BOARDS: dict[str, dict[str, str]] = {
 
 def get_board(name: str) -> dict[str, str]:
     import os
-    if os.environ.get("AWS_ENDPOINT_URL"):
-        boards = BOARDS
-    else:
-        boards = TEST_BOARDS
-    
+    boards = TEST_BOARDS if os.environ.get("AWS_ENDPOINT_URL") is None else BOARDS
     if name not in boards:
         raise ValueError(
             f"Unknown board: {name!r}. Available boards: {list(boards)}"
