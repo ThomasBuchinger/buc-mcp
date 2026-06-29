@@ -6,6 +6,22 @@ This plan describes how to build the BUC-MCP server: a centralized MCP server th
 
 ---
 
+## User Stories
+
+1. As an MCP client, I want to connect to the buc-mcp server over Streamable HTTP at `/mcp`, so that I can interact with prompts and skills using the standard MCP protocol.
+2. As an MCP client, I want to list available prompts via the MCP protocol, so that I can discover what prompts the server exposes.
+3. As an MCP client, I want to read a specific prompt by name, so that I can retrieve its rendered content.
+4. As an MCP client, I want to list available skills as resources, so that I can discover skill directories the server exposes.
+5. As an MCP client, I want to read a skill's `SKILL.md` (e.g. `skill://traintimes/SKILL.md`), so that I can load the skill's instructions.
+6. As a Kubernetes liveness probe, I want `GET /health/live` to return 200 when the process is alive, so that the probe can restart unhealthy pods.
+7. As a Kubernetes readiness probe, I want `GET /health/ready` to return 200 only when providers are functional (prompts and resources can be listed), so that traffic is not routed to a server that isn't ready.
+8. As an operator, I want a `GET /metrics` endpoint exposing Prometheus metrics, so that I can monitor request counts, latency, and errors.
+9. As a developer, I want the `skills/` directory to be auto-discovered via `SkillsDirectoryProvider`, so that adding a new skill (a directory with `SKILL.md`) requires no code changes.
+10. As a developer, I want the `prompts/` directory to be auto-discovered via `FileSystemProvider`, so that adding a new prompt file registers it automatically.
+11. As a developer, I want a `main()` CLI entry point that runs the server with `transport="http"`, so that I can run the server locally for development.
+
+---
+
 ## Phase 1 — Project Scaffolding
 
 ### 1.1 Python project setup

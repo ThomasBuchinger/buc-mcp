@@ -23,6 +23,7 @@ dev = [
     "anyio[trio]",
     "httpx",
     "python-semantic-release",
+    "moto[s3]",
 ]
 
 [build-system]

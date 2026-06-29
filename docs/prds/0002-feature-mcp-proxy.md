@@ -41,6 +41,19 @@ An in-process proxy solves these problems by hosting upstream servers server-sid
 
 ---
 
+## User Stories
+
+1. As an MCP client, I want to connect to `/buc-context7/mcp` and list tools, so that I can see the proxied upstream Context7 tools without needing my own API key.
+2. As an MCP client, I want to call a proxied Context7 tool via `/buc-context7/mcp`, so that I can use upstream functionality through the proxy as if it were native.
+3. As an operator, I want the `/buc-context7/mcp` endpoint to be mounted only when `CONTEXT7_API_KEY` is set, so that the server starts gracefully even without the key configured.
+4. As an operator, I want the proxy to authenticate to the upstream Context7 server using a Bearer token stored server-side, so that API keys are centralized and not distributed to clients.
+5. As an operator, I want a dedicated `GET /health/context7/ready` endpoint that checks upstream connectivity by listing tools, so that I can monitor proxy health independently of the rest of the server.
+6. As an operator, I want the parent `/health/ready` endpoint to NOT check the proxy, so that upstream Context7 outages do not take down the coding and kubernetes endpoints.
+7. As an operator, I want proxy connection errors to be logged, so that I can diagnose upstream connectivity issues.
+8. As an operator, I want Prometheus metrics for the Context7 proxy (request counts, latency, error rates), so that I can observe proxy behavior at the HTTP level.
+
+---
+
 ## Technical Approach
 
 ### FastMCP Proxy Mechanism

@@ -93,5 +93,6 @@ if get_context7_api_key():
 context7_app = context7.http_app(stateless_http=False)
 
 
-mcp_kanban = FastMCP("buc-kanban")
-kanban_app = mcp_kanban.http_app(stateless_http=False)
+from src.kanban.tools import mcp_personal
+
+personal_app = mcp_personal.http_app(stateless_http=False)

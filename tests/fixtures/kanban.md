@@ -18,5 +18,5 @@
 
 ## Done
 
-- [ ] Completed
-- [ ] Finished
+- [x] Completed
+- [x] Finished

@@ -14,19 +14,20 @@ kanban-plugin: basic
 - [ ] Setup immich Family
 - [ ] Setup dex for internal services
 - [ ] Install ProxmoxBackupServer on NAS
+- [ ] TestCard
 
 
 ## Done
 
 **Complete**
-- [x] TestCard
+- [x] CompletedCard
 
 
 ***
 
 ## Archive
 
-- [x] TestCard
+- [x] ArchiveCard
 
 %% kanban:settings
 ```
