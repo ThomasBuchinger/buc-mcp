@@ -15,17 +15,17 @@ from dataclasses import dataclass, field
 BOARDS: dict[str, dict[str, str]] = {
     "General": {
         "bucket": "obsidian-sync",
-        "key": "buc/3_Project/AgentKanban.md",
+        "key": "vault/buc/3_Project/AgentKanban.md",
         "description": "Default board for small misc tasks. Use this board unless specified differently. expecially if you're using the remindme skill",
     },
     # "Homelab": {
     #     "bucket": "obsidian-sync",
-    #     "key": "buc/3_Project/Homelab.md",
+    #     "key": "vault/buc/3_Project//Homelab.md",
     #     "description": "Use this board, when you detect the conversation is about self hosting Applications or Kubernetes or Software Engineering/Development/Programming topics. Keywords: Homelab, lab, apps, services. If unsure, ask the user if you should use this board",
     # },
     # "Food": {
     #     "bucket": "obsidian-sync",
-    #     "key": "buc/3_Project/Food.md",
+    #     "key": "vault/buc/3_Project//Food.md",
     #     "description": "This board is basically a Grocery list. Use this board, when the user asks you to remind them to buy food items. Keywords: essen, food",
     # },
 }
@@ -46,7 +46,7 @@ TEST_BOARDS: dict[str, dict[str, str]] = {
 
 def get_board(name: str) -> dict[str, str]:
     import os
-    boards = TEST_BOARDS if os.environ.get("AWS_ENDPOINT_URL") is None else BOARDS
+    boards = BOARDS if os.environ.get("AWS_ENDPOINT_URL") else TEST_BOARDS
     if name not in boards:
         raise ValueError(
             f"Unknown board: {name!r}. Available boards: {list(boards)}"
