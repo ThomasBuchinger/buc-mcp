@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.10.4 (2026-06-29)
+
+### Bug Fixes
+
+- Preserve S3 metadata. avoids conflicts with obsidian
+  ([`3b8c2b3`](https://github.com/thomasbuchinger/buc-mcp/commit/3b8c2b3d4fc64da21ba01d6247d523ac86c61f79))
+
+
 ## v0.10.3 (2026-06-29)
 
 ### Bug Fixes
