@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.10.5 (2026-06-29)
+
+### Bug Fixes
+
+- Obsidian conflicts: set static device id
+  ([`8806888`](https://github.com/thomasbuchinger/buc-mcp/commit/8806888f00710fa4254a90181f556bc2673f760e))
+
+
 ## v0.10.4 (2026-06-29)
 
 ### Bug Fixes
