@@ -1,5 +1,6 @@
 """Integration tests for the Kanban MCP tools."""
 
+import os
 import anyio
 import pytest
 from fastmcp import Client
@@ -29,6 +30,7 @@ def dummy_s3():
 
 @pytest.fixture(autouse=True)
 def _setup_client(dummy_s3):
+    os.environ.pop("AWS_ENDPOINT_URL", None)
     global client
     client = Client(tools.mcp_personal)
 

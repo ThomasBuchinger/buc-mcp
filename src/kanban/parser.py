@@ -30,13 +30,29 @@ BOARDS: dict[str, dict[str, str]] = {
     # },
 }
 
+TEST_BOARDS: dict[str, dict[str, str]] = {
+    "todo": {
+        "bucket": "buc-personal",
+        "key": "kanban.md",
+        "description": "Personal task board",
+    },
+    "obsidian": {
+        "bucket": "buc-personal",
+        "key": "agentKanban.md",
+        "description": "Obsidian Kanban board",
+    },
+}
+
 
 def get_board(name: str) -> dict[str, str]:
-    if name not in BOARDS:
+    import os
+
+    boards = BOARDS if os.environ.get("AWS_ENDPOINT_URL") else TEST_BOARDS
+    if name not in boards:
         raise ValueError(
-            f"Unknown board: {name!r}. Available boards: {list(BOARDS)}"
+            f"Unknown board: {name!r}. Available boards: {list(boards)}"
         )
-    return BOARDS[name]
+    return boards[name]
 
 
 # ── Data models ──────────────────────────────────────────────────────────────
