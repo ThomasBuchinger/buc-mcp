@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.10.2 (2026-06-29)
+
+### Bug Fixes
+
+- Decouple test BOARDS config from production. try #2
+  ([`9f93fc8`](https://github.com/thomasbuchinger/buc-mcp/commit/9f93fc821c1f55d80f00128136ac299d467e17ca))
+
+
 ## v0.10.1 (2026-06-29)
 
 ### Bug Fixes
