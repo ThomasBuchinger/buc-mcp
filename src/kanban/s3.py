@@ -5,6 +5,9 @@ raw strings with auto-incrementing ETags and honours ``IfMatch`` conditional
 writes.
 """
 
+import hashlib
+import time
+
 
 class ETagConflictError(Exception):
     """Raised when the stored ETag does not match the expected value."""
@@ -14,6 +17,17 @@ CONFLICT_MESSAGE = (
     "Board was modified since you last read it. "
     "Call `list_items` to refresh, then retry your operation."
 )
+
+# Keys preserved between read and write cycles so S3 object metadata
+# (ContentType, custom Metadata, etc.) is never lost.
+_PRESERVED_KEYS = frozenset({
+    "ContentType",
+    "ContentLanguage",
+    "ContentDisposition",
+    "ContentEncoding",
+    "CacheControl",
+    "Metadata",
+})
 
 
 class DummyS3:
@@ -42,7 +56,7 @@ class DummyS3:
         return {"Body": body, "ETag": etag}
 
     def put_object(
-        self, Bucket: str, Key: str, Body: str, IfMatch: str | None = None
+        self, Bucket: str, Key: str, Body: str, IfMatch: str | None = None, **kwargs
     ) -> dict:
         existing = self._store.get((Bucket, Key))
         if IfMatch is not None:
@@ -54,22 +68,47 @@ class DummyS3:
 
 
 class S3Client:
-    """Thin wrapper over a boto3 S3 client with conditional-write support."""
+    """Thin wrapper over a boto3 S3 client with conditional-write support.
+
+    Caches S3 object metadata from ``get_object`` and re-applies it on
+    ``put_object`` so that per-object attributes (ContentType, custom
+    Metadata dict, …) are preserved through the fetch-modify-write cycle
+    without callers needing to thread them explicitly.
+    """
 
     def __init__(self, client) -> None:
         self._client = client
+        self._meta_cache: dict[tuple[str, str], dict] = {}
 
     def get_object(self, Bucket: str, Key: str) -> dict:
         resp = self._client.get_object(Bucket=Bucket, Key=Key)
         body = resp["Body"].read().decode("utf-8")
+        # Cache metadata for the next put_object call.
+        meta: dict = {}
+        for k in _PRESERVED_KEYS:
+            if k in resp:
+                meta[k] = resp[k]
+        self._meta_cache[(Bucket, Key)] = meta
         return {"Body": body, "ETag": resp["ETag"]}
 
     def put_object(
-        self, Bucket: str, Key: str, Body: str, IfMatch: str | None = None
+        self, Bucket: str, Key: str, Body: str, IfMatch: str | None = None,
     ) -> dict:
         kwargs: dict = {"Bucket": Bucket, "Key": Key, "Body": Body.encode("utf-8")}
         if IfMatch is not None:
             kwargs["IfMatch"] = IfMatch
+        # Re-apply cached metadata, auto-refreshing obsidian fields.
+        meta = self._meta_cache.pop((Bucket, Key), {})
+        for k, v in meta.items():
+            if k == "Metadata":
+                m = dict(v)
+                m["obsidian-mtime"] = str(int(time.time() * 1000))
+                m["obsidian-fingerprint"] = (
+                    "sha256:" + hashlib.sha256(Body.encode()).hexdigest()
+                )
+                kwargs[k] = m
+            else:
+                kwargs[k] = v
         try:
             resp = self._client.put_object(**kwargs)
         except Exception as e:
