@@ -102,6 +102,7 @@ class S3Client:
         for k, v in meta.items():
             if k == "Metadata":
                 m = dict(v)
+                m["obsidian-device-id"] = "device-4c5060b72cb62539"
                 m["obsidian-mtime"] = str(int(time.time() * 1000))
                 m["obsidian-fingerprint"] = (
                     "sha256:" + hashlib.sha256(Body.encode()).hexdigest()
