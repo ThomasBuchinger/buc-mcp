@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.10.3 (2026-06-29)
+
+### Bug Fixes
+
+- Fix path for production kanban boards
+  ([`3645f97`](https://github.com/thomasbuchinger/buc-mcp/commit/3645f973871a453b7aae4fc5b04805f86c56eee2))
+
+
 ## v0.10.2 (2026-06-29)
 
 ### Bug Fixes
