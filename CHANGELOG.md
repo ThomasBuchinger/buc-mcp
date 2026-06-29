@@ -2,6 +2,25 @@
 
 <!-- version list -->
 
+## v0.10.0 (2026-06-29)
+
+### Bug Fixes
+
+- Decouple test BOARDS config from production
+  ([`5329b73`](https://github.com/thomasbuchinger/buc-mcp/commit/5329b7310e4c9fdf72b77203e591b612bfb9f052))
+
+- Typo in skill-name and add skill.sh to devbox
+  ([`66842bc`](https://github.com/thomasbuchinger/buc-mcp/commit/66842bccbd6b3e069838049e6a517ceea643ef3c))
+
+### Features
+
+- Add Kanban Tools to MCP
+  ([`1f9fc94`](https://github.com/thomasbuchinger/buc-mcp/commit/1f9fc94e90bda29116f92a3510177204f3f2c4a9))
+
+- Obsidian-s3-kanban-mcp first implementation
+  ([`218e941`](https://github.com/thomasbuchinger/buc-mcp/commit/218e941e79cc774072453436124ea09b2a3866de))
+
+
 ## v0.9.0 (2026-05-31)
 
 ### Bug Fixes
