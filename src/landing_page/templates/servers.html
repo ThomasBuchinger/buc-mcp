@@ -1,0 +1,52 @@
+<div class="table-wrap">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Server</th>
+        <th>MCP Endpoint</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows}
+    </tbody>
+  </table>
+</div>
+<style>
+.table-wrap{overflow-x:auto}
+.data-table{width:100%;border-collapse:collapse;font-size:0.82rem}
+.data-table th{
+  text-align:left;
+  padding:0.5rem 0.75rem;
+  font-size:0.7rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--text-muted);
+  border-bottom:1px solid var(--border);
+}
+.data-table td{
+  padding:0.6rem 0.75rem;
+  border-bottom:1px solid rgba(38,43,62,0.5);
+  vertical-align:middle;
+}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:var(--bg-card-hover)}
+.server-name{font-weight:500;color:var(--text-primary)}
+.server-path{
+  font-family:var(--font-mono);
+  font-size:0.78rem;
+  color:var(--text-secondary);
+}
+.status-badge{
+  display:inline-flex;align-items:center;gap:0.3rem;
+  font-size:0.7rem;font-weight:600;
+  padding:0.2rem 0.5rem;
+  border-radius:100px;
+}
+.status-badge.mounted{color:var(--green);background:rgba(52,211,153,0.08);border:1px solid rgba(52,211,153,0.15)}
+.status-badge.unmounted{color:var(--text-muted);background:rgba(90,94,122,0.08);border:1px solid rgba(90,94,122,0.15)}
+.status-dot{width:5px;height:5px;border-radius:50%}
+.status-dot.mounted{background:var(--green)}
+.status-dot.unmounted{background:var(--text-muted)}
+</style>

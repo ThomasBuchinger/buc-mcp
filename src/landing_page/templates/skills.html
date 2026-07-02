@@ -1,0 +1,62 @@
+<div class="skills-layout">
+  <div class="skills-tree">
+    {categories}
+  </div>
+  <div id="skill-viewer" class="skill-viewer">
+    <p class="viewer-placeholder">Select a skill to view its content</p>
+  </div>
+</div>
+<style>
+.skills-layout{display:flex;gap:1.25rem;min-height:200px}
+.skills-tree{flex:1;min-width:0}
+.skill-viewer{
+  flex:1.5;
+  background:var(--bg-primary);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:1rem;
+  min-height:180px;
+  overflow-y:auto;
+  max-height:420px;
+}
+.viewer-placeholder{color:var(--text-muted);font-size:0.82rem;text-align:center;padding:2rem 0}
+.skill-category{margin-bottom:0.5rem}
+.category-header{
+  display:flex;align-items:center;gap:0.5rem;
+  width:100%;
+  padding:0.5rem 0.75rem;
+  background:var(--bg-surface);
+  border:1px solid var(--border);
+  border-radius:5px;
+  cursor:pointer;
+  font-family:var(--font-display);
+  font-size:0.78rem;
+  font-weight:600;
+  color:var(--text-secondary);
+  transition:all 0.15s;
+  text-align:left;
+}
+.category-header:hover{background:var(--bg-card);color:var(--text-primary);border-color:var(--border-active)}
+.category-header .arrow{font-size:0.65rem;transition:transform 0.2s;color:var(--text-muted)}
+.category-header .cat-count{font-size:0.65rem;color:var(--text-muted);font-weight:400;margin-left:auto}
+.category-items{margin-top:0.25rem;padding-left:0.5rem}
+.skill-link{
+  display:block;
+  padding:0.35rem 0.75rem;
+  font-size:0.78rem;
+  color:var(--text-secondary);
+  text-decoration:none;
+  border-radius:4px;
+  cursor:pointer;
+  transition:all 0.12s;
+  border-left:2px solid transparent;
+}
+.skill-link:hover{color:var(--accent);background:var(--accent-glow);border-left-color:var(--accent)}
+.skill-link .skill-desc{
+  display:block;
+  font-size:0.7rem;
+  color:var(--text-muted);
+  margin-top:0.05rem;
+}
+.htmx-request .skill-link{opacity:0.5;pointer-events:none}
+</style>

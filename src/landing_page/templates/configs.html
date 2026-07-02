@@ -1,0 +1,57 @@
+<div class="table-wrap">
+  <table class="data-table">
+    <thead>
+      <tr>
+        <th>Server</th>
+        <th>Type</th>
+        <th>URL / Command</th>
+      </tr>
+    </thead>
+    <tbody>
+      {rows}
+    </tbody>
+  </table>
+</div>
+<style>
+.table-wrap{overflow-x:auto}
+.data-table{width:100%;border-collapse:collapse;font-size:0.82rem}
+.data-table th{
+  text-align:left;
+  padding:0.5rem 0.75rem;
+  font-size:0.7rem;
+  font-weight:600;
+  text-transform:uppercase;
+  letter-spacing:0.06em;
+  color:var(--text-muted);
+  border-bottom:1px solid var(--border);
+}
+.data-table td{
+  padding:0.6rem 0.75rem;
+  border-bottom:1px solid rgba(38,43,62,0.5);
+  vertical-align:middle;
+}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr:hover td{background:var(--bg-card-hover)}
+.config-name{font-weight:500;color:var(--text-primary)}
+.config-type{
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  padding:0.15rem 0.4rem;
+  border-radius:4px;
+  background:var(--bg-surface);
+  border:1px solid var(--border);
+  color:var(--text-secondary);
+}
+.config-url{
+  font-family:var(--font-mono);
+  font-size:0.78rem;
+  color:var(--blue);
+  word-break:break-all;
+}
+.config-cmd{
+  font-family:var(--font-mono);
+  font-size:0.72rem;
+  color:var(--text-secondary);
+  word-break:break-all;
+}
+</style>

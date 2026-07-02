@@ -1,0 +1,54 @@
+<div class="sync-block">
+  <p class="sync-desc">Run this command to sync the latest skills and prompts to your local environment:</p>
+  <div class="code-block-wrapper">
+    <div class="code-block">
+      <code>curl -s <span class="server-url">{server_url}</span>/sync.sh | bash</code>
+    </div>
+    <button class="copy-btn" onclick="navigator.clipboard.writeText('curl -s {server_url}/sync.sh | bash')">Copy</button>
+  </div>
+  <p class="sync-note">Requires <strong>curl</strong> and <strong>bash</strong>. The <code class="inline-code">{server_url}</code> is injected by the server based on your request host.</p>
+</div>
+<style>
+.sync-desc{color:var(--text-secondary);margin-bottom:0.75rem;font-size:0.82rem}
+.code-block-wrapper{display:flex;gap:0.5rem;margin-bottom:0.75rem}
+.code-block{
+  flex:1;
+  background:var(--bg-primary);
+  border:1px solid var(--border);
+  border-radius:6px;
+  padding:0.75rem 1rem;
+  font-family:var(--font-mono);
+  font-size:0.8rem;
+  line-height:1.5;
+  overflow-x:auto;
+  white-space:nowrap;
+  color:var(--text-primary);
+}
+.code-block .server-url{color:var(--accent);font-weight:500}
+.copy-btn{
+  font-family:var(--font-display);
+  font-size:0.75rem;
+  font-weight:600;
+  padding:0.75rem 1rem;
+  background:var(--accent);
+  color:var(--bg-primary);
+  border:none;
+  border-radius:6px;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:all 0.15s;
+  text-transform:uppercase;
+  letter-spacing:0.04em;
+}
+.copy-btn:hover{background:#e0961a;transform:translateY(-1px);box-shadow:0 4px 12px rgba(245,166,35,0.25)}
+.copy-btn:active{transform:translateY(0)}
+.sync-note{color:var(--text-muted);font-size:0.75rem;line-height:1.5}
+.inline-code{
+  font-family:var(--font-mono);
+  font-size:0.75rem;
+  background:var(--bg-primary);
+  padding:0.1rem 0.35rem;
+  border-radius:3px;
+  color:var(--accent);
+}
+</style>

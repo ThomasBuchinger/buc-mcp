@@ -26,6 +26,7 @@ from src.mcp import (
     mcp_personal,
     personal_app,
 )
+from src.landing_page.routes import router as landing_router
 
 ROOT_DIR = Path(__file__).resolve().parent.parent
 MCP_CONFIG_PATH = ROOT_DIR / "mcpconfigs" / "mcp.json"
@@ -55,6 +56,9 @@ if get_context7_api_key():
 # Health + metrics on parent app
 register_health_routes(app, coding, kubernetes, syncSkill, context7, mcp_personal)
 register_metrics_route(app)
+
+# Landing page
+app.include_router(landing_router)
 
 
 @app.get("/sync.sh", response_class=PlainTextResponse)
