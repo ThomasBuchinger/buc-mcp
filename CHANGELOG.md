@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.12.0 (2026-07-02)
+
+### Features
+
+- **landingpage**: Add landing page
+  ([`ca88326`](https://github.com/thomasbuchinger/buc-mcp/commit/ca88326bb3732db71831902512ff4f418be281b1))
+
+
 ## v0.11.0 (2026-07-02)
 
 ### Features
