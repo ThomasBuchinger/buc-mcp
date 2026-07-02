@@ -110,7 +110,7 @@ wheels = [
 
 [[package]]
 name = "buc-mcp"
-version = "0.10.2"
+version = "0.10.4"
 source = { editable = "." }
 dependencies = [
     { name = "boto3" },

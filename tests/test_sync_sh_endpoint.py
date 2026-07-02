@@ -21,3 +21,9 @@ def test_sync_sh_starts_with_server_url(client):
 def test_sync_sh_server_url_from_host_header(client):
     response = client.get("/sync.sh", headers={"Host": "myhost:8000"})
     assert "SERVER_URL='http://myhost:8000'" in response.text
+
+
+def test_sync_sh_contains_models_mode(client):
+    response = client.get("/sync.sh")
+    assert 'MODEL_API_URL="${MODEL_API_URL:-http://10.0.0.190:32434/v1}"' in response.text
+    assert "sync_model_main" in response.text
