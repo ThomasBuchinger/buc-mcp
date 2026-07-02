@@ -2,6 +2,14 @@
 
 <!-- version list -->
 
+## v0.11.0 (2026-07-02)
+
+### Features
+
+- **sync**: Add model sync endpoint
+  ([`19933f1`](https://github.com/thomasbuchinger/buc-mcp/commit/19933f11327b28ac36c74cbf60241f7471f7e6f8))
+
+
 ## v0.10.5 (2026-06-29)
 
 ### Bug Fixes
