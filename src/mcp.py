@@ -8,6 +8,7 @@ from fastmcp.server import create_proxy
 from fastmcp.server.providers import FileSystemProvider
 from fastmcp.server.providers.skills import SkillsDirectoryProvider
 from fastmcp.server.transforms import ResourcesAsTools
+from mcp.types import ToolAnnotations
 
 def get_context7_api_key() -> str | None:
     return os.environ.get("CONTEXT7_API_KEY") or None
@@ -15,7 +16,12 @@ def get_context7_api_key() -> str | None:
 def create_noop_tool(mcp):
     """Add a simple Read tool to an MCP server that has no tools."""
 
-    @mcp.tool
+    @mcp.tool(annotations=ToolAnnotations(
+        readOnlyHint=True,
+        destructiveHint=False,
+        idempotentHint=True,
+        openWorldHint=False,
+    ))
     def noop(filePath: str) -> str:
         """Dummy Tool. DO NOT USE"""
         return ""

@@ -6,6 +6,7 @@ server stays stateless across calls. All three tools return the refreshed
 """
 
 from fastmcp import FastMCP
+from mcp.types import ToolAnnotations
 
 from src.kanban import parser
 from src.kanban.s3 import get_s3_client
@@ -57,7 +58,12 @@ def _write(board_cfg: dict, content: str, etag: str) -> None:
     )
 
 
-@mcp_personal.tool(description=_build_tool_description())
+@mcp_personal.tool(description=_build_tool_description(), annotations=ToolAnnotations(
+    readOnlyHint=True,
+    destructiveHint=False,
+    idempotentHint=False,
+    openWorldHint=True,
+))
 def kanban_list_items(board: str, archive: bool = False) -> list[dict]:
     cfg = parser.get_board(board)
     content, _ = _fetch(cfg)
@@ -65,7 +71,12 @@ def kanban_list_items(board: str, archive: bool = False) -> list[dict]:
     return parser.list_items(state, archive=archive)
 
 
-@mcp_personal.tool
+@mcp_personal.tool(annotations=ToolAnnotations(
+    readOnlyHint=False,
+    destructiveHint=False,
+    idempotentHint=False,
+    openWorldHint=True,
+))
 def kanban_add_item(
     board: str,
     text: str,
@@ -89,7 +100,12 @@ def kanban_add_item(
     return parser.list_items(state, archive=False)
 
 
-@mcp_personal.tool
+@mcp_personal.tool(annotations=ToolAnnotations(
+    readOnlyHint=False,
+    destructiveHint=False,
+    idempotentHint=False,
+    openWorldHint=True,
+))
 def kanban_move_item(
     board: str,
     number: int,
