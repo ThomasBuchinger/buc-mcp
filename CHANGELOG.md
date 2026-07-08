@@ -2,6 +2,30 @@
 
 <!-- version list -->
 
+## v0.13.0 (2026-07-08)
+
+### Bug Fixes
+
+- Remove binary check in sync.sh, because is fails on 'curl ... | bash'
+  ([`f18173c`](https://github.com/thomasbuchinger/buc-mcp/commit/f18173c958628db6c68d56a059a1a8f77899ed83))
+
+- Typo in path
+  ([`c835d78`](https://github.com/thomasbuchinger/buc-mcp/commit/c835d7883513f5e1ddb7e3900bfad6d2bde1ca7b))
+
+### Chores
+
+- Change PRD numbering
+  ([`6c588dd`](https://github.com/thomasbuchinger/buc-mcp/commit/6c588dde9e6e3c46d5fbf0ae1c20dc82a93427b4))
+
+- Set MCP tool hints
+  ([`ff19a7b`](https://github.com/thomasbuchinger/buc-mcp/commit/ff19a7bdd2964a40f974f176574dd2142af6ed71))
+
+### Features
+
+- Update to-prd skill to include the public interface ans tighten testing instructions
+  ([`0eb359a`](https://github.com/thomasbuchinger/buc-mcp/commit/0eb359ab49e72d5cb80732fa4af3c6b65cfdc6c0))
+
+
 ## v0.12.0 (2026-07-02)
 
 ### Features
