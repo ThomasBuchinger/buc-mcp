@@ -18,15 +18,14 @@ def grill_me_adr() -> str:
 def grill_me_context() -> str:
     return (SKILLS_DIR / "coding" / "mattpocock_grill-me" / "resources" / "CONTEXT-FORMAT.md").read_text()
 
-
 @prompt(description=skill_description(SKILLS_DIR / "coding" / "mattpocock_tdd"))
 def tdd(prompt = "") -> str:
     content = skill_content(SKILLS_DIR / "coding" / "mattpocock_tdd")
     return content + prompt
 
-@prompt(description=skill_description(SKILLS_DIR / "coding" / "mattpocock_to-prd"))
+@prompt(description=skill_description(SKILLS_DIR / "coding" / "buc_to-prd"))
 def grill_me_to_prd(prompt = "") -> str:
-    content = skill_content(SKILLS_DIR / "coding" / "mattpocock_to-prd")
+    content = skill_content(SKILLS_DIR / "coding" / "buc_to-prd")
     return content + prompt
 
 
