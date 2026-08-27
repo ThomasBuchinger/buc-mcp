@@ -71,3 +71,9 @@ Only offer to create an ADR when all three are true:
 If any of the three is missing, skip the ADR. Use the format in `@skill:matpocock-grillme/resources/CONTEXT-FORMAT.md`
 
 </supporting-info>
+
+## After the Session
+
+**IMPORTANT**: When the interview is complete. Provide a summary. NEVER try to implement the change.
+
+The user will provide you with a PRD template to capture the decisions and document the changes before implementation. You do not have the PRD template yet. The user will provide it
