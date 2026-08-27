@@ -16,6 +16,9 @@
     // "ANTHROPIC_API_KEY": "aaa",
     // "ANTHROPIC_CUSTOM_MODEL_OPTION": "qwen",
     "GITHUB_REPOSITORY": "thomasbuchinger/buc-mcp",
+    // "LLAMA_SWAP_URL": "http://10.0.0.190",
+    // "LLAMA_SWAP_PORT": "32434",
+    "DOT_AGENT_DECK_SESSION": "./.dot-agent-deck/config.toml",
     "CONTEXT7_API_KEY":  "ctx7sk-fe28535d-c192-49ef-acda-f4682ad8b461"
   },
   "shell": {
