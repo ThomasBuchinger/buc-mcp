@@ -21,6 +21,15 @@
       "type": "remote",
       "url": "http://10.0.0.190:8080/exa/mcp"
     },
+    "memory-viking": {
+      // Generic Internet Search Engine
+      "type": "remote",
+      "url": "http://10.0.0.190:8080/memory-viking/mcp",
+      "headers":{
+        "x-openviking-user": "CHANGEME",
+        "x-openviking-account": "default"
+      }
+    },
     "k8s-ai": {
       // RedHat Kubernetes MCP @ai
       "type": "remote",
