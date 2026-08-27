@@ -199,23 +199,42 @@ def add_item(
     return parse(serialize(state))
 
 
+def _validate_no_duplicate_numbers(numbers: list[int]) -> None:
+    if len(numbers) != len(set(numbers)):
+        raise ValueError(
+            f"Duplicate item numbers in batch: {sorted(set(n for n in numbers if numbers.count(n) > 1))}"
+        )
+
+
+def _validate_numbers_exist(state: BoardState, numbers: list[int]) -> None:
+    existing = {it.number for it in state.items}
+    missing = [n for n in numbers if n not in existing]
+    if missing:
+        raise ValueError(f"Cannot find item(s) with number(s): {missing}")
+
+
 def move_item(
-    state: BoardState, number: int, column_name: str, prepend: bool = False
+    state: BoardState, numbers: list[int], column_name: str, prepend: bool = False
 ) -> BoardState:
     target_col = find_column_by_name(state.columns, column_name)
     if target_col is None:
         raise ValueError(f"Column {column_name!r} does not exist")
-    item = next((it for it in state.items if it.number == number), None)
-    if item is None:
-        raise ValueError(f"No item with number {number}")
 
-    # Remove the old item line, then reparse for fresh indices.
-    state.lines.pop(item.line_index)
+    _validate_no_duplicate_numbers(numbers)
+    _validate_numbers_exist(state, numbers)
+
+    by_number = {it.number: it for it in state.items}
+    items_in_order = list(by_number[n] for n in numbers)
+    for idx in (it.line_index for it in reversed(items_in_order)):
+        state.lines.pop(idx)
+
     state = parse(serialize(state))
-
     target_col = find_column_by_name(state.columns, column_name)
     assert target_col is not None
-    new_line = _item_line(target_col.is_complete, item.text.strip())
+
     insert_at = _insertion_index(state, target_col, prepend)
-    state.lines.insert(insert_at, new_line)
+    for item in items_in_order:
+        state.lines.insert(insert_at, _item_line(target_col.is_complete, item.text.strip()))
+        insert_at += 1
+
     return parse(serialize(state))

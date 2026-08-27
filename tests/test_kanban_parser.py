@@ -54,9 +54,9 @@ def test_item_checkbox_refects_column():
     state = parser.parse(OBSIDIAN)
     get_testcard = lambda: next(item for item in state.items if item.text == "TestCard")
     assert get_testcard().checked == False
-    state = parser.move_item(state, get_testcard().number, "Done")
+    state = parser.move_item(state, [get_testcard().number], "Done")
     assert get_testcard().checked == True
-    state = parser.move_item(state, get_testcard().number, "Open")
+    state = parser.move_item(state, [get_testcard().number], "Open")
     assert get_testcard().checked == False
     
 def test_multiline_br_items_treated_as_single():
@@ -111,7 +111,7 @@ def test_add_item_nonexistent_column_raises():
 
 def test_move_item_relocates_line():
     state = parser.parse(SIMPLE)
-    state = parser.move_item(state, number=1, column_name="Done", prepend=False)
+    state = parser.move_item(state, numbers=[1], column_name="Done", prepend=False)
     done_items = [it for it in state.items if it.column_name == "Done"]
     assert any(it.text == "First task" for it in done_items)
     todo_items = [it for it in state.items if it.column_name == "Todo"]
@@ -120,7 +120,7 @@ def test_move_item_relocates_line():
 def test_move_item_nonexistent_number_raises():
     state = parser.parse(SIMPLE)
     try:
-        parser.move_item(state, number=999, column_name="Done", prepend=False)
+        parser.move_item(state, numbers=[999], column_name="Done", prepend=False)
     except ValueError:
         return
     raise AssertionError("expected ValueError")
@@ -147,8 +147,113 @@ def test_list_items_returns_number_column_text():
 
 def test_move_item_to_archive_hides_from_default_list():
     state = parser.parse(OBSIDIAN)
-    state = parser.move_item(state, number=1, column_name="Archive")
+    state = parser.move_item(state, numbers=[1], column_name="Archive")
     items = parser.list_items(state)
     assert all(it["text"] != "Meeting mit david" for it in items)
     archived = parser.list_items(state, archive=True)
     assert any(it["text"] == "Meeting mit david" for it in archived)
+
+
+# ── Batch move tests ────────────────────────────────────────────────────────
+
+
+def test_batch_move_multiple_items():
+    state = parser.parse(SIMPLE)
+    state = parser.move_item(state, numbers=[1, 3], column_name="Done")
+    done_items = [it for it in state.items if it.column_name == "Done"]
+    assert any(it.text == "First task" for it in done_items)
+    assert any("Login bug" in it.text for it in done_items)
+    todo_items = [it for it in state.items if it.column_name == "Todo"]
+    assert all("Login bug" not in it.text for it in todo_items)
+    assert all(it.text != "First task" for it in todo_items)
+
+
+def test_batch_move_single_item_via_list():
+    state = parser.parse(SIMPLE)
+    state = parser.move_item(state, numbers=[2], column_name="Review")
+    review_items = [it for it in state.items if it.column_name == "Review"]
+    assert any(it.text == "Second task" for it in review_items)
+    todo_items = [it for it in state.items if it.column_name == "Todo"]
+    assert all(it.text != "Second task" for it in todo_items)
+
+
+def test_batch_move_missing_number_raises():
+    state = parser.parse(SIMPLE)
+    try:
+        parser.move_item(state, numbers=[1, 999], column_name="Done")
+    except ValueError as e:
+        assert "999" in str(e)
+        return
+    raise AssertionError("expected ValueError")
+
+
+def test_batch_move_duplicate_numbers_raises():
+    state = parser.parse(SIMPLE)
+    try:
+        parser.move_item(state, numbers=[1, 1], column_name="Done")
+    except ValueError as e:
+        assert "Duplicate" in str(e)
+        return
+    raise AssertionError("expected ValueError")
+
+
+def test_batch_move_nonexistent_column_raises():
+    state = parser.parse(SIMPLE)
+    try:
+        parser.move_item(state, numbers=[1, 2], column_name="Nonexistent")
+    except ValueError:
+        return
+    raise AssertionError("expected ValueError")
+
+
+def test_batch_move_preserves_order_append():
+    md = "## A\n\n- [ ] item one\n- [ ] item two\n- [ ] item three\n\n## B\n"
+    state = parser.parse(md)
+    state = parser.move_item(state, numbers=[1, 3], column_name="B")
+    b_items = [it for it in state.items if it.column_name == "B"]
+    assert len(b_items) == 2
+    assert b_items[0].text == "item one"
+    assert b_items[1].text == "item three"
+
+
+def test_batch_move_preserves_order_prepend():
+    md = "## A\n\n- [ ] item one\n- [ ] item two\n- [ ] item three\n\n## B\n- [ ] existing\n"
+    state = parser.parse(md)
+    state = parser.move_item(state, numbers=[1, 3], column_name="B", prepend=True)
+    b_items = [it for it in state.items if it.column_name == "B"]
+    assert len(b_items) == 3
+    assert b_items[0].text == "item one"
+    assert b_items[1].text == "item three"
+    assert b_items[2].text == "existing"
+
+
+def test_batch_move_to_same_column_append():
+    md = "## A\n\n- [ ] item one\n- [ ] item two\n- [ ] item three\n"
+    state = parser.parse(md)
+    state = parser.move_item(state, numbers=[1, 3], column_name="A")
+    a_items = [it for it in state.items if it.column_name == "A"]
+    assert len(a_items) == 3
+    assert a_items[0].text == "item two"
+    assert a_items[1].text == "item one"
+    assert a_items[2].text == "item three"
+
+
+def test_batch_move_to_same_column_prepend():
+    md = "## A\n\n- [ ] item one\n- [ ] item two\n- [ ] item three\n"
+    state = parser.parse(md)
+    state = parser.move_item(state, numbers=[1, 3], column_name="A", prepend=True)
+    a_items = [it for it in state.items if it.column_name == "A"]
+    assert len(a_items) == 3
+    assert a_items[0].text == "item one"
+    assert a_items[1].text == "item three"
+    assert a_items[2].text == "item two"
+
+
+def test_batch_move_preserves_file_content():
+    state = parser.parse(OBSIDIAN)
+    original = parser.serialize(state)
+    state = parser.move_item(state, numbers=[1, 2], column_name="Done")
+    # Non-item content (frontmatter, *** separator, footer) must be preserved
+    serialized = parser.serialize(state)
+    assert "kanban:settings" in serialized
+    assert "***" in serialized

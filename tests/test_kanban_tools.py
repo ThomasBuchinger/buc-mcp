@@ -57,3 +57,36 @@ def test_etag_conflict_on_concurrent_write(dummy_s3):
     with pytest.raises(Exception):
         _call("kanban_add_item", {"board": "todo", "text": "second"})
 
+
+def test_kanbanMoveItem_single_via_list():
+    items = _call("kanban_move_item", {"board": "todo", "numbers": [1], "column_name": "Done"})
+    done_items = [it for it in items if it["column_name"] == "Done" and it["text"] == "First task"]
+    assert len(done_items) == 1
+    todo_items = [it for it in items if it["column_name"] == "Todo"]
+    assert all(it["text"] != "First task" for it in todo_items)
+
+
+def test_kanbanMoveItem_batch_move():
+    items = _call("kanban_move_item", {"board": "todo", "numbers": [1, 3], "column_name": "Done"})
+    done_items = [it for it in items if it["column_name"] == "Done"]
+    done_texts = [it["text"] for it in done_items]
+    assert "First task" in done_texts
+    assert any("Login bug" in text for text in done_texts)
+    todo_items = [it for it in items if it["column_name"] == "Todo"]
+    assert all("Login bug" not in it["text"] for it in todo_items)
+    assert all(it["text"] != "First task" for it in todo_items)
+
+
+def test_kanbanMoveItem_batch_missing_number_returns_error():
+    with pytest.raises(Exception):
+        _call("kanban_move_item", {"board": "todo", "numbers": [1, 999], "column_name": "Done"})
+
+
+def test_kanbanMoveItem_batch_duplicate_number_returns_error():
+    with pytest.raises(Exception):
+        _call("kanban_move_item", {"board": "todo", "numbers": [1, 1], "column_name": "Done"})
+
+
+def test_kanbanMoveItem_batch_unknown_column_returns_error():
+    with pytest.raises(Exception):
+        _call("kanban_move_item", {"board": "todo", "numbers": [1, 2], "column_name": "Nonexistent"})

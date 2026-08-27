@@ -108,18 +108,22 @@ def kanban_add_item(
 ))
 def kanban_move_item(
     board: str,
-    number: int,
+    numbers: list[int],
     column_name: str,
     prepend: bool = False,
 ) -> list[dict]:
-    """Move an item (identified by its sequence number) to another column.
+    """Move one or more items to another column in a single atomic operation.
+
+    ``numbers`` is always a list of integers, even for a single-item move.
+    Each call to this tool modifies the board and shift the assigne Item numbers.
+    Do not call this tool multiple times, without refreshing the assigned number by calling kanban_list_items tool
 
     The checkbox state is adjusted based on the target column. ``prepend``
-    places the item at the top of the target column.
+    places all moved items above existing items in the target column.
     """
     cfg = parser.get_board(board)
     content, etag = _fetch(cfg)
     state = parser.parse(content)
-    state = parser.move_item(state, number, column_name, prepend)
+    state = parser.move_item(state, numbers, column_name, prepend)
     _write(cfg, parser.serialize(state), etag)
     return parser.list_items(state, archive=False)
