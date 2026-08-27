@@ -2,6 +2,19 @@
 
 <!-- version list -->
 
+## v0.14.0 (2026-08-27)
+
+### Chores
+
+- Routine updates
+  ([`031c1b3`](https://github.com/thomasbuchinger/buc-mcp/commit/031c1b36435f3aa7418ca77fbfa46d0638e3d279))
+
+### Features
+
+- **kanban**: Allow moving multiple items to prevent off-by-one errors
+  ([`9684026`](https://github.com/thomasbuchinger/buc-mcp/commit/96840261475566a098692cd2c3ab673898acdd59))
+
+
 ## v0.13.0 (2026-07-08)
 
 ### Bug Fixes
